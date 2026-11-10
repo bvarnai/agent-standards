@@ -30,7 +30,8 @@ agent-standards/
 │   ├── 02-implementation/SKILL.md      # Spec-driven implementation + test verification
 │   ├── 03-docs-tone-review/SKILL.md    # Documentation & tone audit
 │   ├── 04-pre-release-audit/SKILL.md   # One-shot pre-release readiness audit
-│   └── 05-release/SKILL.md             # Version bump, changelog & release tag
+│   ├── 05-release/SKILL.md             # Version bump, changelog & release tag
+│   └── 06-project-harmonization/SKILL.md # Cross-repo gap analysis & uplift plan
 └── fragments/                          # Reusable blocks & contracts
     ├── strict-technical-tone.md        # Concise developer-to-developer output constraint
     └── stack-routing.md                # CWD marker -> domain rule routing table
@@ -50,6 +51,7 @@ Run these skills from inside the `agy` TUI or directly from your terminal:
 | **3. Docs** | `/03-docs-tone-review` | `agy -i "/03-docs-tone-review"` | `agy -p "/03-docs-tone-review"` | Audit docs for tone and factual accuracy. |
 | **4. Audit** | `/04-pre-release-audit` | — | `agy --effort high -p "/04-pre-release-audit"` | Read-only release readiness checklist. |
 | **5. Release** | `/05-release` | `agy -i "/05-release v1.2.0"` | — | Finalize changelog, bump version, stage tags. |
+| **6. Harmonize** | `/06-project-harmonization` | `agy --mode plan --effort high -i "/06-project-harmonization"` | — | Compare two repos & plan structural uplift. |
 
 ---
 
