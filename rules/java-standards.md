@@ -1,0 +1,26 @@
+# Java Engineering Standards
+
+These standards apply to JVM-based applications whenever `pom.xml`, `build.gradle`, or `build.gradle.kts` is present in the workspace.
+
+## Architectural Principles
+1. **Modern Language Idioms**:
+   - Prefer Java 17+ or Java 21 LTS constructs: records for immutable DTOs, pattern matching for `instanceof` and `switch`, sealed interfaces, and text blocks.
+   - Favor composition over inheritance; make classes `final` unless explicitly designed for extension.
+2. **Immutability & Null Safety**:
+   - Make fields `private final` by default.
+   - Never return `null` for collections or optional values; return `Optional<T>`, `List.of()`, or `Collections.emptyList()`.
+   - Validate method preconditions explicitly (`Objects.requireNonNull(...)`).
+
+## Concurrency & Resource Management
+1. **Resource Lifecycle**:
+   - Always manage I/O streams, database connections, and sockets using `try-with-resources`.
+2. **Virtual Threads / Concurrency**:
+   - For Java 21+, use structured concurrency or virtual threads where appropriate; avoid manual thread pooling for simple short-lived tasks.
+   - Guard shared state using thread-safe data structures (`ConcurrentHashMap`, atomic primitives) rather than broad `synchronized` blocks.
+
+## Verification & Testing Standards
+1. **Testing Framework**:
+   - Use JUnit 5 (`@Test`, `@ParameterizedTest`, `@Nested`) with AssertJ or Hamcrest assertions for readable failure messages.
+2. **Build Tool Hygiene**:
+   - Verification must execute via `./mvnw clean test` (Maven) or `./gradlew check` (Gradle).
+   - Ensure zero compiler warnings and zero checkstyle/spotbugs violations before completing work.
