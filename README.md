@@ -19,10 +19,14 @@ agent-standards/
 │   ├── spec-driven-core.md             # Spec-first & Issue-as-Source-of-Truth core rules
 │   ├── go-cli-standards.md             # Go CLI architecture, error wrapping & testing
 │   ├── java-standards.md               # Modern Java idioms, null-safety, Maven/Gradle verification
-│   └── embedded-standards.md           # Embedded C/C++ deterministic memory, ISR safety, HAL
+│   ├── embedded-standards.md           # Embedded C/C++ deterministic memory, ISR safety, HAL
+│   └── shell-standards.md              # Bash/Shell naming (kebab-case CLI), safety, shellcheck & Bats
 ├── skills/                             # Universal lifecycle skills (agy slash commands)
-│   ├── 00-issue-generation/SKILL.md    # Mandatory Git issue drafting template
-│   ├── 01-spec-generation/SKILL.md     # Interactive spec authoring in docs/spec/
+│   ├── 00-issue-generation/SKILL.md    # Mandatory Git issue drafting template (.issue-draft.md)
+│   ├── 01-spec-generation/
+│   │   ├── SKILL.md                    # Interactive spec authoring & domain template router
+│   │   └── templates/
+│   │       └── cli.md                  # Field-proven CLI spec templates (global.md + <subcommand>.md)
 │   ├── 02-implementation/SKILL.md      # Spec-driven implementation + test verification
 │   ├── 03-docs-tone-review/SKILL.md    # Documentation & tone audit
 │   ├── 04-pre-release-audit/SKILL.md   # One-shot pre-release readiness audit
@@ -56,6 +60,7 @@ Lifecycle skills automatically inspect the current working directory (`CWD`) and
 - **Go**: Triggered by `go.mod` $\rightarrow$ enforces [rules/go-cli-standards.md](rules/go-cli-standards.md) (`go test -race ./...`).
 - **Java**: Triggered by `pom.xml` / `build.gradle` $\rightarrow$ enforces [rules/java-standards.md](rules/java-standards.md) (`./mvnw test` / `./gradlew check`).
 - **Embedded C/C++**: Triggered by `CMakeLists.txt` / `platformio.ini` / `Kconfig` / `*.ld` $\rightarrow$ enforces [rules/embedded-standards.md](rules/embedded-standards.md) (deterministic memory, ISR safety).
+- **Shell / Bash**: Triggered by `*.sh` / `*.bats` / `.bashrc.d/` $\rightarrow$ enforces [rules/shell-standards.md](rules/shell-standards.md) (`kebab-case` public interfaces, `shellcheck`, `bats`).
 
 To add a new stack (e.g. Rust, Python), create `rules/<stack>-standards.md` and add one row to `fragments/stack-routing.md`.
 

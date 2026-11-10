@@ -7,6 +7,7 @@ When executing lifecycle skills in a target workspace, inspect the current worki
 | `go.mod` | Go CLI / Backend | [go-cli-standards.md](../rules/go-cli-standards.md) | `go test -race ./...`, `go vet ./...` |
 | `pom.xml`, `build.gradle`, `build.gradle.kts` | Java (JVM) | [java-standards.md](../rules/java-standards.md) | `./mvnw test` / `./gradlew check` |
 | `CMakeLists.txt`, `platformio.ini`, `Kconfig`, `*.ld`, `Makefile` (firmware) | Embedded C / C++ | [embedded-standards.md](../rules/embedded-standards.md) | Target/host unit test runner, compiler zero-warning check |
+| `*.sh`, `*.bats`, `.bashrc.d/`, `bin/` (shell scripts) | Shell / Bash | [shell-standards.md](../rules/shell-standards.md) | `shellcheck <files>`, `bats tests/` |
 
 ## Multi-Stack Projects
 If a project contains multiple markers (e.g. Go backend with embedded C firmware components in a subdirectory), scope the domain rule to the specific subdirectory being modified.

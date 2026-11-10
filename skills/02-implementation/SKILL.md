@@ -17,14 +17,10 @@ metadata:
 ## Input Contract (Target Workspace CWD)
 1. **Source of Truth**:
    - Require an approved specification in `docs/spec/` or an explicit Git issue. If neither exists, halt and invoke `/01-spec-generation` or `/00-issue-generation` first.
-2. **Tool Execution Guidelines**:
-   - Prefer native inspection tools (`list_dir`, `find_by_name`, `grep_search`, `view_file`).
-   - Request explicit user approval before modifying existing files or creating new ones.
-   - Request explicit user approval before executing mutating git commands or network downloads.
+   - When `docs/spec/global.md` exists alongside `docs/spec/<unit>.md`, read both `global.md` (for shared architecture, error codes, execution boundaries, and package dependency rules) and the target `<unit>.md` before writing code.
 
 ## Implementation Procedure
-1. **Scaffold / Edit**: Implement changes in small, logical units. Ensure Unix (`LF`) line endings.
-2. **Preserve Integrity**: Retain all unrelated existing comments, docstrings, and tests.
-3. **Execute Verification**:
+1. **Scaffold / Edit**: Implement changes in small, logical units traceable to the specification or issue.
+2. **Execute Verification**:
    - Run the stack test suite identified by `stack-routing.md` (e.g. `go test -race ./...`, `./mvnw test`, `ctest`).
    - Do not claim completion until automated tests pass cleanly with zero compiler warnings or lint errors.

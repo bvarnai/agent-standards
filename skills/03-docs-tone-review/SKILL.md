@@ -11,7 +11,6 @@ metadata:
 
 ## Constraints
 - Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
-- Preserve Unix (`LF`) line endings.
 
 ## Input Contract (Target Workspace CWD)
 1. **Target Files**:
@@ -19,7 +18,7 @@ metadata:
    - Inspect API docstrings or package documentation if requested.
 2. **Review Checklist**:
    - [ ] **Tone & Brevity**: Remove conversational filler, marketing fluff, passive voice, and redundant introductory text.
-   - [ ] **Factual Codebase Accuracy**: Verify that code snippets, command line flags, configuration keys, and path references match the actual codebase implementation.
+   - [ ] **Factual & Spec Accuracy**: Verify that code snippets, command line flags, exit codes, configuration keys, and path references match both `docs/spec/` (`global.md` and `<unit>.md` if present) and the actual codebase implementation.
    - [ ] **Link Integrity**: Verify that internal file links and external URLs resolve properly.
    - [ ] **Formatting**: Ensure consistent heading hierarchy, valid code fences with language tags, and well-formed tables.
 

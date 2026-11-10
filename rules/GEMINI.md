@@ -3,7 +3,7 @@
 @[Spec-Driven Core](./spec-driven-core.md)
 
 ## Issue Drafting Trigger
-Whenever the user asks you to write, draft, or generate an "issue" (e.g. using prefix `feat:`, `fix:`, `chore:`), activate the `00-issue-generation` skill and strictly output the Mandatory Issue Layout Template.
+Whenever the user asks you to write, draft, or generate an "issue" (e.g. using prefix `feat:`, `fix:`, `chore:`), activate the `00-issue-generation` skill, output the Mandatory Issue Layout Template, and write the raw Markdown directly to `.issue-draft.md` in `CWD` (`Overwrite: true`, pre-authorized without requiring an extra confirmation prompt).
 
 ## Platform Environment Assumptions
 - **Windows:** Assume `agy` is running in a Git Bash environment. The `agy` executable is launched from a Git Bash shell directly.
