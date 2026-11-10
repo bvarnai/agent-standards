@@ -7,35 +7,37 @@ metadata:
   recommended_flags: "--mode plan --effort high"
 ---
 
-# 01 — Technical Specification Generation
+# 01 — Technical specification generation
 
-## Constraints & Domain Rules
+## Constraints & domain rules
 1. Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 2. Read and enforce [spec-driven-core.md](../../rules/spec-driven-core.md).
-3. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active language rule (`go-cli-standards.md`, `java-standards.md`, `embedded-standards.md`).
+3. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active domain rule(s) (`go-cli-standards.md`, `java-standards.md`, `embedded-standards.md`, `shell-standards.md`).
 
-## Domain Template Routing
+## Domain template routing
 Select and read the specification template matching the target system's domain before drafting:
 
 | Project Domain | Template to Load | Topology |
 | :--- | :--- | :--- |
-| **CLI Application** (Go, Rust, Python, C/C++) | [templates/cli.md](./templates/cli.md) | `docs/spec/global.md` + `docs/spec/<subcommand>.md` (or `global.md` only for single-command tools) |
+| **CLI Application / Shell Toolkit** (Go, Shell/Bash, Rust, Python, C/C++) | [templates/cli.md](./templates/cli.md) | `docs/spec/global.md` + `docs/spec/<subcommand>.md` (or `global.md` only for single-command tools) |
 | **Other Domains** (Library, Service, Firmware) | Fallback outline below (until a domain template is added under `templates/`) | `docs/spec/global.md` + optional `docs/spec/<module>.md` |
 
-## Core Authoring Directives
-1. **Strict Global Alignment (DRY)**:
+## Core authoring directives
+1. **Strict global alignment (DRY)**:
    - `docs/spec/global.md` is the single source of truth for cross-cutting concerns, shared flags/options, configuration schemas, error codes, external execution boundaries, package layout, and shared domain models.
    - `docs/spec/<unit>.md` must reference `global.md` and never redefine global flags, shared structs, or global error sentinels.
    - Do not overengineer topology: split into `<unit>.md` files only when the project has multiple distinct subcommands or modules.
-2. **Decoupled Testability Boundary**:
+2. **Incremental spec evolution (Day-2 updates)**:
+   - When updating existing specifications in `docs/spec/` for a new feature or issue, preserve unrelated sections verbatim and update both `global.md` (if shared flags, schemas, subcommand registries, or exit codes change) and the affected `<unit>.md`.
+3. **Decoupled testability boundary**:
    - Specify narrow execution/runner interfaces (`Runner`, `Inspector`, `Manager`, `HAL`) in `global.md` so domain logic in `<unit>.md` can be unit-tested in isolation from CLI/transport/hardware layers.
-3. **Legacy Reverse-Engineering Mode (When `/legacy` or Reference Code Exists)**:
+4. **Legacy reverse-engineering mode (when `/legacy` or reference code exists)**:
    - Abstract away source-language mechanics (e.g., Bash subshells, `awk`/`sed` pipelines, unquoted globals) into idiomatic target-stack contracts and stdlib equivalents.
-   - Clean-break modernization: fix fragile legacy behaviors (race conditions, non-atomic writes, localized porcelain parsing) rather than preserving bugs, and include the conditional **Legacy Discrepancies & Modernization Decisions** section in `global.md`.
-4. **Pre-Flight Ambiguity Check**:
+   - Clean-break modernization: fix fragile legacy behaviors (race conditions, non-atomic writes, localized porcelain parsing) rather than preserving bugs, and include the conditional **Legacy discrepancies & modernization decisions** section in `global.md`.
+5. **Pre-flight ambiguity check**:
    - Inspect `README.md`, build markers, existing `docs/spec/` files, and any `/legacy` sources first. If critical architectural decisions remain ambiguous, ask concise clarifying questions before generating the spec.
 
-## Fallback Outline for Non-CLI Domains
+## Fallback outline for non-CLI domains
 When authoring specifications for non-CLI domains without a dedicated file in `templates/`, structure `docs/spec/global.md` (and optional `docs/spec/<module>.md`) covering:
 1. **System Overview & Public Interface / Protocol Conventions**
 2. **Runtime Environment, Dependencies & Configuration Schema**

@@ -6,7 +6,7 @@ Designed for native integration with `antigravity-cli` (`agy`) and compatible wi
 
 ---
 
-## Repository Architecture
+## Repository architecture
 
 The repository separates **universal developer workflows** from **stack-specific engineering standards**, allowing you to use identical commands across any programming language or project:
 
@@ -28,10 +28,11 @@ agent-standards/
 │   │   └── templates/
 │   │       └── cli.md                  # Field-proven CLI spec templates (global.md + <subcommand>.md)
 │   ├── 02-implementation/SKILL.md      # Spec-driven implementation + test verification
-│   ├── 03-docs-tone-review/SKILL.md    # Documentation & tone audit
+│   ├── 03-docs-review/SKILL.md         # Documentation & tone audit
 │   ├── 04-pre-release-audit/SKILL.md   # One-shot pre-release readiness audit
 │   ├── 05-release/SKILL.md             # Version bump, changelog & release tag
-│   └── 06-project-harmonization/SKILL.md # Cross-repo gap analysis & uplift plan
+│   ├── 06-project-harmonization/SKILL.md # Cross-repo gap analysis & uplift plan
+│   └── 07-model-compass/SKILL.md       # Periodic model benchmark & compass updater
 └── fragments/                          # Reusable blocks & contracts
     ├── strict-technical-tone.md        # Concise developer-to-developer output constraint
     └── stack-routing.md                # CWD marker -> domain rule routing table
@@ -39,58 +40,80 @@ agent-standards/
 
 ---
 
-## Universal Lifecycle Skills
+## Universal lifecycle skills
 
 Run these skills from inside the `agy` TUI or directly from your terminal:
 
 | Stage | Slash Command | CLI Interactive (`agy -i`) | CLI Headless / Audit (`agy -p`) | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
-| **0. Issue** | `/00-issue-generation` | `agy -i "/00-issue-generation feat: add foo"` | `agy -p "/00-issue-generation feat: add foo"` | Draft strict, spec-driven Git issues. |
-| **1. Spec** | `/01-spec-generation` | `agy --mode plan --effort high -i "/01-spec-generation"` | — | Author technical specs in `docs/spec/`. |
-| **2. Code** | `/02-implementation` | `agy --effort high -i "/02-implementation #42"` | — | Implement changes traceable to an issue/spec. |
-| **3. Docs** | `/03-docs-tone-review` | `agy -i "/03-docs-tone-review"` | `agy -p "/03-docs-tone-review"` | Audit docs for tone and factual accuracy. |
-| **4. Audit** | `/04-pre-release-audit` | — | `agy --effort high -p "/04-pre-release-audit"` | Read-only release readiness checklist. |
-| **5. Release** | `/05-release` | `agy -i "/05-release v1.2.0"` | — | Finalize changelog, bump version, stage tags. |
+| **0. Issue** | `/00-issue-generation` | `agy --effort medium -i "/00-issue-generation feat: add foo"` | `agy --effort medium -p "/00-issue-generation feat: add foo"` | Draft strict, spec-driven Git issues. |
+| **1. Spec** | `/01-spec-generation` | `agy --mode plan --effort high -i "/01-spec-generation"` | — | Author or update technical specs in `docs/spec/`. |
+| **2. Code** | `/02-implementation` | `agy --effort medium -i "/02-implementation #42"` | — | Implement features/fixes with spec sync & tests. |
+| **3. Docs** | `/03-docs-review` | `agy --effort medium -i "/03-docs-review"` | `agy --effort medium -p "/03-docs-review"` | Audit docs for tone and factual accuracy. |
+| **4. Audit** | `/04-pre-release-audit` | `agy --effort high -i "/04-pre-release-audit"` | `agy --effort high -p "/04-pre-release-audit"` | Read-only release or branch readiness audit. |
+| **5. Release** | `/05-release` | `agy --effort low -i "/05-release v1.2.0"` | — | Finalize changelog, bump version, stage tags. |
 | **6. Harmonize** | `/06-project-harmonization` | `agy --mode plan --effort high -i "/06-project-harmonization"` | — | Compare two repos & plan structural uplift. |
+| **7. Models** | `/07-model-compass` | `agy --effort medium -i "/07-model-compass"` | — | Review available models & update the compass table. |
+
+### Model & effort mental compass
+
+Choose the **Model (`--model` / `/model`)** for its base instincts (**Gemini 4 Argon** for deep architectural synthesis vs. **Gemini 3.8** for surgical coding and fast tool loops) and **Effort (`--effort`)** for per-turn thinking depth:
+
+| Engineering Goal | Lifecycle Stage(s) | Recommended Model | Effort & Mode | Why This Combination Works Best |
+| :--- | :--- | :--- | :--- | :--- |
+| **System Architecture, Specs & Cross-Repo Uplift** | `01-spec-generation`<br>`06-project-harmonization` | **Gemini 4 Argon** | `--mode plan --effort high` | Deepest multi-file reasoning, legacy reverse-engineering, and interface/invariant synthesis before writing code. |
+| **Pre-Release Readiness & Cross-Artifact Audit** | `04-pre-release-audit` | **Gemini 4 Argon**<br>*(or **Gemini 3.8** for branch diffs)* | `--effort high`<br>*(or `medium` for branch diffs)* | Holds Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI invariants in working memory simultaneously to catch subtle drift without false positives. |
+| **Hands-On Coding, TDD & Tool Execution Loops** | `02-implementation`<br>`00-issue-generation` | **Gemini 3.8** | `--effort medium`<br>*(or `high` for race/concurrency bugs)* | Stronger coding instincts and surgical diffs; follows existing code style without over-abstraction and iterates faster across 10–20 edit/test steps. |
+| **Documentation Tone & Accuracy Review** | `03-docs-review` | **Gemini 3.8**<br>*(or **Gemini 4 Argon**)* | `--effort medium` | Verifies flags/examples against code while keeping developer prose direct, natural, and free of stiff AI phrasing. |
+| **Mechanical Release Cut & Changelog Bump** | `05-release`<br>*(plus trivial `chore:`/`docs:` issues)* | **Gemini 3.8** *(or **Flash** / **Argon Low**)* | `--effort low` | Purely deterministic execution (SemVer bump, `CHANGELOG.md` move, Git tag staging); `low` prevents re-auditing and minimizes latency. |
 
 ---
 
-## Multi-Stack Domain Rule Routing
+## Multi-stack domain rule routing
 
 Lifecycle skills automatically inspect the current working directory (`CWD`) and load the matching rule file via `fragments/stack-routing.md`:
 
-- **Go**: Triggered by `go.mod` $\rightarrow$ enforces [rules/go-cli-standards.md](rules/go-cli-standards.md) (`go test -race ./...`).
+- **Go**: Triggered by `go.mod` $\rightarrow$ enforces [rules/go-cli-standards.md](rules/go-cli-standards.md) (`go test -race ./...`, `go vet ./...`).
 - **Java**: Triggered by `pom.xml` / `build.gradle` $\rightarrow$ enforces [rules/java-standards.md](rules/java-standards.md) (`./mvnw test` / `./gradlew check`).
-- **Embedded C/C++**: Triggered by `CMakeLists.txt` / `platformio.ini` / `Kconfig` / `*.ld` $\rightarrow$ enforces [rules/embedded-standards.md](rules/embedded-standards.md) (deterministic memory, ISR safety).
+- **Embedded C/C++**: Triggered by `CMakeLists.txt` / `platformio.ini` / `Kconfig` / `*.ld` $\rightarrow$ enforces [rules/embedded-standards.md](rules/embedded-standards.md) (deterministic memory, fixed-width types, ISR safety).
 - **Shell / Bash**: Triggered by `*.sh` / `*.bats` / `.bashrc.d/` $\rightarrow$ enforces [rules/shell-standards.md](rules/shell-standards.md) (`kebab-case` public interfaces, `shellcheck`, `bats`).
 
 To add a new stack (e.g. Rust, Python), create `rules/<stack>-standards.md` and add one row to `fragments/stack-routing.md`.
 
 ---
 
-## Machine Setup for `antigravity-cli` (`agy`)
+## Machine setup for `antigravity-cli` (`agy`)
 
-To make these skills and rules globally available across all your repositories with zero project-level configuration:
+All internal paths inside `agent-standards` (`skills.json`, `rules/`, `skills/`, `fragments/`) are strictly relative, so the repository can be cloned to any workspace location or mounted as a submodule inside an `infra` / dotfiles repository.
 
-### 1. Register Skills Globally
-Add this repository to your global `~/.gemini/config/skills.json`:
+### 1. Portable symlink / dotfiles integration (recommended)
+Link the repository root (or its `rules/` and `skills/` directories) into `~/.gemini` via your dotfiles bootstrapper so no workspace path is hardcoded in user config files:
+
+```bash
+# Link global baseline rules and skills directly into ~/.gemini
+ln -sfn "<path-to-agent-standards>/rules/GEMINI.md" ~/.gemini/GEMINI.md
+ln -sfn "<path-to-agent-standards>/rules/spec-driven-core.md" ~/.gemini/spec-driven-core.md
+mkdir -p ~/.gemini/config
+ln -sfn "<path-to-agent-standards>/skills" ~/.gemini/config/skills
+```
+
+### 2. Alternative: `skills.json` inheritance
+If managing multiple skill sources in `~/.gemini/config/skills.json`, inherit from `skills.json`:
 
 ```json
 {
   "inherits": [
     {
-      "path": "~/workspace/agent-standards/skills.json"
+      "path": "~/.gemini/agent-standards/skills.json"
     }
   ]
 }
 ```
 
-### 2. Point Global Rules to `rules/GEMINI.md`
-Ensure your `~/.gemini/GEMINI.md` inherits or symlinks to `rules/GEMINI.md`:
-```bash
-ln -sf ~/workspace/agent-standards/rules/GEMINI.md ~/.gemini/GEMINI.md
-```
-Or include it inside your existing `GEMINI.md`:
-```markdown
-@[Baseline Rules](~/workspace/agent-standards/rules/GEMINI.md)
-```
+---
+
+## 🤖 AI Disclosure
+
+![AI Assisted](https://img.shields.io/badge/AI-Assisted-blue?style=flat-square)
+
+This project was developed with the assistance of AI tools. All AI-generated code has been reviewed, tested, and manually refined.

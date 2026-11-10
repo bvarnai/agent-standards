@@ -1,32 +1,34 @@
-# Go CLI Engineering Standards
+# Go CLI engineering standards
 
 These standards apply to Go CLI applications and services whenever `go.mod` is present in the workspace.
 
-## Architectural Principles
-1. **Entry Point Separation**:
+## Architectural principles
+1. **Entry point separation**:
    - `main.go` / `cmd/<tool>/main.go` must remain minimal: parse environment/flags, call an `app.Run(ctx, args, stdout, stderr)` function, and call `os.Exit(code)`.
    - Keep business logic in `internal/` to avoid polluting the public module API unless package reusability is explicitly required.
-2. **Standard I/O Streams**:
+2. **Standard I/O streams**:
    - Always accept `io.Writer` for `stdout` and `stderr` rather than writing directly to `os.Stdout` / `os.Stderr` to make commands easily testable.
    - Structured output (JSON, YAML) and standard logs must not mix on `stdout`; write diagnostic logs to `stderr`.
 
-## Error Handling & Context
-1. **Explicit Wrapping**:
+## Error handling & context
+1. **Explicit wrapping & inspection**:
    - Wrap errors with contextual verbs using `fmt.Errorf("reading config %s: %w", path, err)`.
+   - Inspect sentinel and structured errors using `errors.Is` and `errors.As` rather than string matching or direct equality (`==`).
    - Never discard errors (`_ = ...`) without an explicit inline comment explaining why it is safe.
-2. **Context Propagation**:
-   - Accept `context.Context` as the first argument in all network, filesystem, or long-running operations.
-   - Respect context cancellation in loops and goroutines (`select { case <-ctx.Done(): return ctx.Err() ... }`).
+2. **Context propagation & signal handling**:
+   - Accept `context.Context` as the first argument in all network, filesystem, subprocess (`exec.CommandContext`), or long-running operations.
+   - Wire `signal.NotifyContext(ctx, os.Interrupt, syscall.SIGTERM)` at the CLI root and respect context cancellation in loops and goroutines (`select { case <-ctx.Done(): return ctx.Err() ... }`).
 
-## Exit Codes & POSIX Conventions
+## Exit codes & POSIX conventions
 - `0`: Success.
-- `1`: General application error.
+- `1`: General application / runtime error.
 - `2`: Command line usage / flag syntax error.
+- `130`: Process interrupted (`SIGINT` / `SIGTERM` context cancellation).
 
-## Verification & Testing Standards
+## Verification & testing standards
 1. **Table-Driven Tests**:
    - Use table-driven tests (`tests := []struct{ name string; ... }`) with `t.Run(tt.name, func(t *testing.T) { ... })`.
-2. **Race Detection**:
-   - All tests must pass with `go test -race ./...`.
+2. **Race Detection & Static Analysis**:
+   - All tests and static checks must pass with `go test -race ./...` and `go vet ./...` (plus `golangci-lint run` when configured in the repository).
 3. **No Flaky Tests**:
    - Use real synchronization primitives (`sync.WaitGroup`, channels) instead of `time.Sleep` in tests.
