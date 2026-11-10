@@ -44,7 +44,7 @@ agent-standards/
 
 Run these skills from inside the `agy` TUI or directly from your terminal:
 
-| Stage | Slash Command | CLI Interactive (`agy -i`) | CLI Headless / Audit (`agy -p`) | Purpose |
+| Stage | Slash command | CLI interactive (`agy -i`) | CLI headless / audit (`agy -p`) | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
 | **0. Issue** | `/00-issue-generation` | `agy --effort medium -i "/00-issue-generation feat: add foo"` | `agy --effort medium -p "/00-issue-generation feat: add foo"` | Draft strict, spec-driven Git issues. |
 | **1. Spec** | `/01-spec-generation` | `agy --mode plan --effort high -i "/01-spec-generation"` | — | Author or update technical specs in `docs/spec/`. |
@@ -57,15 +57,15 @@ Run these skills from inside the `agy` TUI or directly from your terminal:
 
 ### Model & effort mental compass
 
-Choose the **Model (`--model` / `/model`)** for its base instincts (**Gemini 4 Argon** for deep architectural synthesis vs. **Gemini 3.8** for surgical coding and fast tool loops) and **Effort (`--effort`)** for per-turn thinking depth:
+Choose the **model (`--model` / `/model`)** for its base instincts (**Gemini 4 Argon** for deep architectural synthesis vs. **Gemini 3.8** for surgical coding and fast tool loops) and **effort (`--effort`)** for per-turn thinking depth:
 
-| Engineering Goal | Lifecycle Stage(s) | Recommended Model | Effort & Mode | Why This Combination Works Best |
+| Engineering goal | Lifecycle stages | Recommended model | Effort & mode | Why this combination works best |
 | :--- | :--- | :--- | :--- | :--- |
-| **System Architecture, Specs & Cross-Repo Uplift** | `01-spec-generation`<br>`06-project-harmonization` | **Gemini 4 Argon** | `--mode plan --effort high` | Deepest multi-file reasoning, legacy reverse-engineering, and interface/invariant synthesis before writing code. |
-| **Pre-Release Readiness & Cross-Artifact Audit** | `04-pre-release-audit` | **Gemini 4 Argon**<br>*(or **Gemini 3.8** for branch diffs)* | `--effort high`<br>*(or `medium` for branch diffs)* | Holds Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI invariants in working memory simultaneously to catch subtle drift without false positives. |
-| **Hands-On Coding, TDD & Tool Execution Loops** | `02-implementation`<br>`00-issue-generation` | **Gemini 3.8** | `--effort medium`<br>*(or `high` for race/concurrency bugs)* | Stronger coding instincts and surgical diffs; follows existing code style without over-abstraction and iterates faster across 10–20 edit/test steps. |
-| **Documentation Tone & Accuracy Review** | `03-docs-review` | **Gemini 3.8**<br>*(or **Gemini 4 Argon**)* | `--effort medium` | Verifies flags/examples against code while keeping developer prose direct, natural, and free of stiff AI phrasing. |
-| **Mechanical Release Cut & Changelog Bump** | `05-release`<br>*(plus trivial `chore:`/`docs:` issues)* | **Gemini 3.8** *(or **Flash** / **Argon Low**)* | `--effort low` | Purely deterministic execution (SemVer bump, `CHANGELOG.md` move, Git tag staging); `low` prevents re-auditing and minimizes latency. |
+| **System architecture, specs & cross-repo uplift** | `01-spec-generation`<br>`06-project-harmonization` | **Gemini 4 Argon** | `--mode plan --effort high` | Deepest multi-file reasoning, legacy reverse-engineering, and interface/invariant synthesis before writing code. |
+| **Pre-release readiness & cross-artifact audit** | `04-pre-release-audit` | **Gemini 4 Argon**<br>*(or **Gemini 3.8** for branch diffs)* | `--effort high`<br>*(or `medium` for branch diffs)* | Holds Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI invariants in working memory simultaneously to catch subtle drift without false positives. |
+| **Hands-on coding, TDD & tool execution loops** | `02-implementation`<br>`00-issue-generation` | **Gemini 3.8** | `--effort medium`<br>*(or `high` for race/concurrency bugs)* | Stronger coding instincts and surgical diffs; follows existing code style without over-abstraction and iterates faster across 10–20 edit/test steps. |
+| **Documentation tone & accuracy review** | `03-docs-review` | **Gemini 3.8**<br>*(or **Gemini 4 Argon**)* | `--effort medium` | Verifies flags/examples against code while keeping developer prose direct, natural, and free of stiff AI phrasing. |
+| **Mechanical release cut & changelog bump** | `05-release`<br>*(plus trivial `chore:`/`docs:` issues)* | **Gemini 3.8** *(or **Flash** / **Argon Low**)* | `--effort low` | Purely deterministic execution (SemVer bump, `CHANGELOG.md` move, Git tag staging); `low` prevents re-auditing and minimizes latency. |
 
 ---
 

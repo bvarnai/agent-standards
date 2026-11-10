@@ -17,10 +17,10 @@ metadata:
 ## Domain template routing
 Select and read the specification template matching the target system's domain before drafting:
 
-| Project Domain | Template to Load | Topology |
+| Project domain | Template to load | Topology |
 | :--- | :--- | :--- |
-| **CLI Application / Shell Toolkit** (Go, Shell/Bash, Rust, Python, C/C++) | [templates/cli.md](./templates/cli.md) | `docs/spec/global.md` + `docs/spec/<subcommand>.md` (or `global.md` only for single-command tools) |
-| **Other Domains** (Library, Service, Firmware) | Fallback outline below (until a domain template is added under `templates/`) | `docs/spec/global.md` + optional `docs/spec/<module>.md` |
+| **CLI application / Shell toolkit** (Go, Shell/Bash, Rust, Python, C/C++) | [templates/cli.md](./templates/cli.md) | `docs/spec/global.md` + `docs/spec/<subcommand>.md` (or `global.md` only for single-command tools) |
+| **Other domains** (Library, service, firmware) | Fallback outline below (until a domain template is added under `templates/`) | `docs/spec/global.md` + optional `docs/spec/<module>.md` |
 
 ## Core authoring directives
 1. **Strict global alignment (DRY)**:
@@ -39,9 +39,9 @@ Select and read the specification template matching the target system's domain b
 
 ## Fallback outline for non-CLI domains
 When authoring specifications for non-CLI domains without a dedicated file in `templates/`, structure `docs/spec/global.md` (and optional `docs/spec/<module>.md`) covering:
-1. **System Overview & Public Interface / Protocol Conventions**
-2. **Runtime Environment, Dependencies & Configuration Schema**
-3. **Error Taxonomy & Fault / Status Code Matrix**
-4. **Execution Boundaries, Concurrency & Resource/ISR Safety**
-5. **Package / Module Architecture & Shared Domain Models**
-6. **Module Registry & Verification Plan**
+1. **System overview & public interface / protocol conventions**
+2. **Runtime environment, dependencies & configuration schema**
+3. **Error taxonomy & fault / status code matrix**
+4. **Execution boundaries, concurrency & resource/ISR safety**
+5. **Package / module architecture & shared domain models**
+6. **Module registry & verification plan**

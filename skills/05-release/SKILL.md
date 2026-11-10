@@ -40,9 +40,9 @@ metadata:
 
 ## Output contract & verification gate (stop before tagging)
 Before executing any mutating Git commands, output:
-1. **Calculated Version:** `vX.Y.Z` (with a 1-sentence technical justification based on the commit log).
-2. **Modified Files:** List of updated manifests and the `CHANGELOG.md` diff.
-3. **Proposed Commands:** The exact commands to run upon user approval:
+1. **Calculated version:** `vX.Y.Z` (with a 1-sentence technical justification based on the commit log).
+2. **Modified files:** List of updated manifests and the `CHANGELOG.md` diff.
+3. **Proposed commands:** The exact commands to run upon user approval:
    ```bash
    git add CHANGELOG.md <modified-manifests>
    git commit -m "chore(release): cut vX.Y.Z"

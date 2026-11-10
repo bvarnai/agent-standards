@@ -16,7 +16,7 @@ Whenever the user asks you to write, draft, or generate an "issue" (e.g. using p
 
 ## Line endings & Markdown formatting
 - **LF line endings:** Always use Unix-style (`LF`) line endings when generating or modifying files, even when operating on Windows.
-- **Sentence-case headings:** Always use sentence case for Markdown headings and titles (e.g., `## Multi-stack domain rule routing`, not `## Multi-Stack Domain Rule Routing`). Capitalize only the first word and proper nouns, acronyms, or exact code identifiers (`Git`, `CLI`, `POSIX`, `Go`, `Java`, `WSL`, `CWD`).
+- **Sentence-case headings, tables & labels:** Always use sentence case for Markdown headings, table column headers, and bold row/list labels (e.g., `## Multi-stack domain rule routing`, not `## Multi-Stack Domain Rule Routing`). Capitalize only the first word and proper nouns, acronyms, or exact code identifiers (`Git`, `CLI`, `POSIX`, `Go`, `Java`, `WSL`, `CWD`, `TDD`, `CI`, `SemVer`).
 
 ## Tool policy & execution guidelines
 To ensure maximum execution speed, avoid unnecessary shell process prompts, and maintain safety across all projects:

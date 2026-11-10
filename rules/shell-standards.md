@@ -24,8 +24,8 @@ These standards apply whenever authoring or modifying shell scripts (`*.sh`, ext
    - Pass `--` before positional file or ref arguments (`rm -f -- "${target}"`, `cd -- "${dir}" || return`) to guard against leading-dash injection.
 
 ## Verification & testing standards
-1. **Static Analysis (`shellcheck`)**:
+1. **Static analysis (`shellcheck`)**:
    - Always run [ShellCheck](https://www.shellcheck.net/) (`shellcheck <script>`) and resolve all warnings and errors before completing changes.
-2. **Automated Testing (`bats`)**:
+2. **Automated testing (`bats`)**:
    - Test non-trivial shell scripts and `.bashrc.d` launchers using [Bats](https://github.com/bats-core/bats-core) (`*.bats`).
    - Isolate test state in temporary sandboxes (`TEST_SANDBOX="$(mktemp -d)"`, overriding `HOME` or `PATH`) and clean up in `teardown()`.

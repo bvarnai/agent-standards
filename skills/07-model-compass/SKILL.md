@@ -26,13 +26,13 @@ Gather the active candidate models from:
 ### 2. Evaluate against lifecycle task profiles
 Classify the available models across the five `agent-standards` execution profiles:
 
-| Task Profile | Lifecycle Stage(s) | Primary Bottleneck | Key Selection Criteria | Default Effort |
+| Task profile | Lifecycle stages | Primary bottleneck | Key selection criteria | Default effort |
 | :--- | :--- | :--- | :--- | :--- |
-| **1. Architecture, Specs & Cross-Repo Uplift** | `01-spec-generation`<br>`06-project-harmonization` | Multi-file synthesis & invariant design | Deepest reasoning, legacy reverse-engineering accuracy, long-context coherence. | `--mode plan --effort high` |
-| **2. Pre-Release & Cross-Artifact Audit** | `04-pre-release-audit` | High-recall cross-checking (Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI) | Low false-positive rate, high attention across many files in a single read-only pass. | `--effort high`<br>*(or `medium` for branch diffs)* |
-| **3. Hands-On Coding, TDD & Tool Loops** | `02-implementation`<br>`00-issue-generation` | 10–20 step tool-loop latency & surgical diff quality | Strict adherence to existing code style, minimal over-abstraction, fast `edit_file` $\rightarrow$ test cycles. | `--effort medium`<br>*(or `high` for race/concurrency bugs)* |
-| **4. Documentation Tone & Accuracy Review** | `03-docs-review` | Natural developer prose + technical verification | Avoids stiff AI phrasing while accurately cross-checking flags and examples against code. | `--effort medium` |
-| **5. Mechanical Release Cut** | `05-release` | Turnaround speed & strict procedure compliance | Fast, deterministic execution (SemVer bump, `CHANGELOG.md` update, Git tag staging) without re-auditing. | `--effort low` |
+| **1. Architecture, specs & cross-repo uplift** | `01-spec-generation`<br>`06-project-harmonization` | Multi-file synthesis & invariant design | Deepest reasoning, legacy reverse-engineering accuracy, long-context coherence. | `--mode plan --effort high` |
+| **2. Pre-release & cross-artifact audit** | `04-pre-release-audit` | High-recall cross-checking (Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI) | Low false-positive rate, high attention across many files in a single read-only pass. | `--effort high`<br>*(or `medium` for branch diffs)* |
+| **3. Hands-on coding, TDD & tool loops** | `02-implementation`<br>`00-issue-generation` | 10–20 step tool-loop latency & surgical diff quality | Strict adherence to existing code style, minimal over-abstraction, fast `edit_file` $\rightarrow$ test cycles. | `--effort medium`<br>*(or `high` for race/concurrency bugs)* |
+| **4. Documentation tone & accuracy review** | `03-docs-review` | Natural developer prose + technical verification | Avoids stiff AI phrasing while accurately cross-checking flags and examples against code. | `--effort medium` |
+| **5. Mechanical release cut** | `05-release` | Turnaround speed & strict procedure compliance | Fast, deterministic execution (SemVer bump, `CHANGELOG.md` update, Git tag staging) without re-auditing. | `--effort low` |
 
 ## Output contract
 1. **Model evaluation summary**:

@@ -38,12 +38,12 @@ Produce a deterministic 3-part harmonization report and plan:
 ### 1. Structural diff & gap analysis
 Compare the two repositories across all three scope areas:
 
-| Component / Area | `<reference-repo>` (Reference) | `<target-repo>` (Current) | Required Action (Uplift / Backport) |
+| Component / area | `<reference-repo>` (reference) | `<target-repo>` (current) | Required action (uplift / backport) |
 | :--- | :--- | :--- | :--- |
 | `docs/spec/` | ... | ... | ... |
-| Package Layout (`internal/...`) | ... | ... | ... |
-| CI / Release Workflows | ... | ... | ... |
-| Docs & Governance | ... | ... | ... |
+| Package layout (`internal/...`) | ... | ... | ... |
+| CI / release workflows | ... | ... | ... |
+| Docs & governance | ... | ... | ... |
 
 ### 2. Canonical template definition
 Define the unified directory tree and shared file/package manifest that both repositories will share once harmonized.

@@ -41,21 +41,21 @@ metadata:
 ## Output contract
 Produce a concise, actionable audit report containing:
 
-1. **Verification Checkpoint Summary**:
+1. **Verification checkpoint summary**:
    | Checkpoint | Status | Details |
    | :--- | :--- | :--- |
-   | Working Tree Hygiene | Pass / Fail | ... |
-   | Automated Test Suite & Linter | Pass / Fail | ... |
-   | Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs Alignment | Pass / Fail | ... |
-   | Release & CI Artifacts | Pass / Fail | ... |
-   | **Release Readiness Verdict** | **GO** / **NO-GO** | **NO-GO** if any `P0` blocker exists |
+   | Working tree hygiene | Pass / Fail | ... |
+   | Automated test suite & linter | Pass / Fail | ... |
+   | Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs alignment | Pass / Fail | ... |
+   | Release & CI artifacts | Pass / Fail | ... |
+   | **Release readiness verdict** | **GO** / **NO-GO** | **NO-GO** if any `P0` blocker exists |
 
-2. **Prioritized Findings** (Omit empty tiers):
-   - **Release Blockers (`P0`):** Failing tests, critical spec/code/doc inconsistencies, broken build/release instructions, or missing legal/release artifacts that must be fixed before tagging.
-   - **Technical & Documentation Debt (`P1`):** Undocumented edge cases/failure modes, happy-path bias, or fragile configurations.
-   - **Polish & Governance (`P2`):** Minor drift, community template gaps, or diagnostic/metric improvements.
+2. **Prioritized findings** (omit empty tiers):
+   - **Release blockers (`P0`):** Failing tests, critical spec/code/doc inconsistencies, broken build/release instructions, or missing legal/release artifacts that must be fixed before tagging.
+   - **Technical & documentation debt (`P1`):** Undocumented edge cases/failure modes, happy-path bias, or fragile configurations.
+   - **Polish & governance (`P2`):** Minor drift, community template gaps, or diagnostic/metric improvements.
 
-3. **Remediation Matrix**:
-   | Priority | Finding | File / Artifact | Concrete Fix |
+3. **Remediation matrix**:
+   | Priority | Finding | File / artifact | Concrete fix |
    | :--- | :--- | :--- | :--- |
    | `P0` / `P1` / `P2` | ... | `path/to/file` | Exact change required |

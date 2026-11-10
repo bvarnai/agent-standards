@@ -21,8 +21,8 @@ These standards apply to microcontroller firmware, RTOS, and bare-metal environm
    - Model asynchronous communication (UART, SPI, I2C, BLE, CAN) using explicit, finite state machines with state transition bounds and timeout guards.
 
 ## Verification & build standards
-1. **Host-Side Unit Tests**:
+1. **Host-side unit tests**:
    - Decouple algorithms (e.g. packet decoding, checksum calculations, PID controllers) into pure functions and test them using a host-based test runner (e.g. Unity, CppUTest, or GoogleTest via `ctest`).
-2. **Compiler Warning & Footprint Hygiene**:
+2. **Compiler warning & footprint hygiene**:
    - Compile with `-Wall -Wextra -Werror -Wconversion -Wstrict-prototypes` (for C) and enforce zero compiler warnings.
    - Run static analysis (`cppcheck` / `clang-tidy` when configured) and verify Flash/RAM section budgets (`size <elf>`) on target builds.

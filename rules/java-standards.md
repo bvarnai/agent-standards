@@ -22,8 +22,8 @@ These standards apply to JVM-based applications whenever `pom.xml`, `build.gradl
    - Use parameterized SLF4J logging (`log.error("Failed for {}", id, ex)`) instead of `System.out` / `printStackTrace()`.
 
 ## Verification & testing standards
-1. **Testing Framework**:
+1. **Testing framework**:
    - Use JUnit 5 (`@Test`, `@ParameterizedTest`, `@Nested`) with AssertJ or Hamcrest assertions for readable failure messages.
-2. **Build Tool Hygiene**:
+2. **Build tool hygiene**:
    - Verification must execute via `./mvnw test` (Maven) or `./gradlew check` (Gradle).
    - Ensure zero compiler warnings and zero checkstyle/spotbugs violations before completing work.

@@ -40,7 +40,7 @@ metadata:
   - *"it should be noted that"* / *"herein"* $\rightarrow$ *"note that"* or state the fact directly.
 
 ### 4. Technical precision, spec alignment & link integrity
-- **Sentence-case headings:** Ensure all Markdown headings use sentence case (e.g., `## Multi-stack domain rule routing`, capitalizing only the first word and proper nouns/acronyms) rather than Title Case.
+- **Sentence-case headings, tables & labels:** Ensure all Markdown headings, table column headers, and bold row/list labels use sentence case (e.g., `## Multi-stack domain rule routing`, capitalizing only the first word and proper nouns/acronyms like `Go`, `Git`, `CLI`, `CI`, `TDD`, `SemVer`) rather than Title Case.
 - **Preserve technical precision:** Do not alter code blocks, CLI flags, configuration keys, exit codes, or exact technical meanings while simplifying surrounding prose.
 - **Spec & codebase cross-check:** Flag any documented command syntax, flag default, config key, or example output that contradicts `docs/spec/` or the implementation.
 - **Link & formatting hygiene:** Verify internal Markdown links resolve on disk, heading hierarchy is consistent, and code blocks carry valid language tags (`bash`, `yaml`, `go`, `text`).
@@ -57,7 +57,7 @@ metadata:
 
 ## Output contract
 For each reviewed file:
-1. **Key Edits & Findings:** Bullet the most significant phrasing, tone, or structural improvements made (plus any spec/code/link discrepancies found) and why.
-2. **Revised Documentation:**
+1. **Key edits & findings:** Bullet the most significant phrasing, tone, or structural improvements made (plus any spec/code/link discrepancies found) and why.
+2. **Revised documentation:**
    - In interactive mode (`agy -i`): Propose and apply the cleaned-up Markdown edits directly to the target file(s) upon user confirmation (or provide the ready-to-copy revised Markdown when reviewing a single snippet/file).
-   - In headless mode (`agy -p`): Output the **Key Edits & Findings** summary followed by the cleaned-up **Revised Text** (or unified diffs for multi-file audits).
+   - In headless mode (`agy -p`): Output the **Key edits & findings** summary followed by the cleaned-up **Revised text** (or unified diffs for multi-file audits).

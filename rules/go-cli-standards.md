@@ -26,9 +26,9 @@ These standards apply to Go CLI applications and services whenever `go.mod` is p
 - `130`: Process interrupted (`SIGINT` / `SIGTERM` context cancellation).
 
 ## Verification & testing standards
-1. **Table-Driven Tests**:
+1. **Table-driven tests**:
    - Use table-driven tests (`tests := []struct{ name string; ... }`) with `t.Run(tt.name, func(t *testing.T) { ... })`.
-2. **Race Detection & Static Analysis**:
+2. **Race detection & static analysis**:
    - All tests and static checks must pass with `go test -race ./...` and `go vet ./...` (plus `golangci-lint run` when configured in the repository).
-3. **No Flaky Tests**:
+3. **No flaky tests**:
    - Use real synchronization primitives (`sync.WaitGroup`, channels) instead of `time.Sleep` in tests.

@@ -39,11 +39,11 @@ metadata:
 
 ## Output contract & commit / PR handoff
 Upon passing verification, output:
-1. **Acceptance Criteria Verification Matrix**:
-   | Acceptance Criterion / Edge Case | Status | Verifying Test / File |
+1. **Acceptance criteria verification matrix**:
+   | Acceptance criterion / edge case | Status | Verifying test / file |
    | :--- | :--- | :--- |
    | ... | Pass | `path/to/test_file:TestName` |
-2. **Proposed Git Commit & PR Commands** (Wait for user confirmation before executing mutating Git commands):
+2. **Proposed Git commit & PR commands** (wait for user confirmation before executing mutating Git commands):
    ```bash
    git add <modified-files>
    git commit -m "<type>(<scope>): <concise summary>" -m "Closes #<issue-id>"

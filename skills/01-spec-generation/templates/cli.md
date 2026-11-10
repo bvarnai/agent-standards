@@ -27,13 +27,13 @@ Use **Template A (`docs/spec/global.md`)** for application-wide CLI architecture
   - Built-in help integration (`--help` man-page interception vs `-h` direct binary help).
 
 ## 3. Standard exit code matrix
-| Exit Code | Error Category / Sentinel | Semantic Meaning | Common Triggers |
+| Exit code | Error category / sentinel | Semantic meaning | Common triggers |
 | :--- | :--- | :--- | :--- |
 | `0` | `nil` | Success | Command completed cleanly. |
-| `1` | `ErrRuntime` | General Runtime Error | Unhandled execution, I/O, or hook error. |
-| `2` | `ErrUsage` | CLI Usage / Syntax Error | Unknown flag, wrong argument count, mutually exclusive flags. |
+| `1` | `ErrRuntime` | General runtime error | Unhandled execution, I/O, or hook error. |
+| `2` | `ErrUsage` | CLI usage / syntax error | Unknown flag, wrong argument count, mutually exclusive flags. |
 | `...` | `...` | `...` | `...` |
-| `130` | `ErrInterrupted` | Process Interrupted | `SIGINT` (Ctrl+C) or `SIGTERM` context cancellation. |
+| `130` | `ErrInterrupted` | Process interrupted | `SIGINT` (Ctrl+C) or `SIGTERM` context cancellation. |
 
 ## 4. External execution boundary & safety
 - **Subprocess invocation standards:**
@@ -54,7 +54,7 @@ Use **Template A (`docs/spec/global.md`)** for application-wide CLI architecture
 - **Shared domain models & interfaces:** Core domain structs and execution boundary interfaces (`Runner`, `Inspector`, `Manager`).
 
 ## 6. Subcommand registry
-| Subcommand | Target Package | Spec File | Core Responsibility |
+| Subcommand | Target package | Spec file | Core responsibility |
 | :--- | :--- | :--- | :--- |
 | `<name>` | `internal/cli` | `<name>.md` | Concise summary of subcommand responsibility. |
 
@@ -94,7 +94,7 @@ Provide a numbered, deterministic step-by-step specification of the subcommand's
 
 ## 4. Error handling & exit codes
 Map subcommand-specific failure scenarios to the global exit code matrix in Section 3 of `docs/spec/global.md`:
-| Exit Code | Error Category | Scenario | Emitted Stderr Pattern | Cleanup / Side Effects |
+| Exit code | Error category | Scenario | Emitted stderr pattern | Cleanup / side effects |
 | :--- | :--- | :--- | :--- | :--- |
 | `0` | `nil` | Success | ... | None. |
 | `...` | `...` | `...` | `[<bin>] Error: ...` | ... |
@@ -105,7 +105,7 @@ Map subcommand-specific failure scenarios to the global exit code matrix in Sect
 - **Security & boundary conditions:** In-memory credential handling, metacharacter/leading-dash guards, offline/read-only modes.
 
 ## 6. Black-box verification scenarios (include when specifying complex state flows)
-| Scenario ID | Given (Repo & Filesystem State) | When (CLI Invocation) | Then (Expected Exit Code, `stdout`/`stderr`, & State) |
+| Scenario ID | Given (repo & filesystem state) | When (CLI invocation) | Then (expected exit code, `stdout`/`stderr`, & state) |
 | :--- | :--- | :--- | :--- |
 | `TC-01` | ... | `<binary> <subcommand> ...` | ... |
 ```
