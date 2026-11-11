@@ -1,26 +1,27 @@
-# agent-standards
+# agy-standards
 
-Single source of truth for AI developer agent standards, universal lifecycle skills, and stack-specific engineering rules.
+A [Google Antigravity](https://antigravity.google) (`agy`) plugin bundling engineering rules, spec-driven lifecycle skills, and stack-specific standards.
 
-Designed for native integration with `antigravity-cli` (`agy`) and compatible with modern AI agent workflows.
+Packaged for native integration across Antigravity (`agy`), with skills authored to the open [Agent Skills](https://agentskills.io/home) specification.
 
 ---
 
-## Repository architecture
+## Repository layout
 
-The repository separates **universal developer workflows** from **stack-specific engineering standards**, allowing you to use identical commands across any programming language or project:
+The repository separates universal developer workflows from stack-specific engineering standards, ensuring consistent command execution across any programming language or project:
 
 ```text
-agent-standards/
+agy-standards/
 ├── README.md                           # Architecture and usage guide
-├── skills.json                         # Native agy customization manifest
-├── rules/                              # Persistent & domain-specific rules
+├── plugin.json                         # Native agy plugin manifest
+├── rules/                              # Universal always-on rules (auto-loaded by plugin)
 │   ├── GEMINI.md                       # Baseline rules (Platform assumptions, LF, Tool Policy)
-│   ├── spec-driven-core.md             # Spec-first & Issue-as-Source-of-Truth core rules
-│   ├── go-cli-standards.md             # Go CLI architecture, error wrapping & testing
-│   ├── java-standards.md               # Modern Java idioms, null-safety, Maven/Gradle verification
-│   ├── embedded-standards.md           # Embedded C/C++ deterministic memory, ISR safety, HAL
-│   └── shell-standards.md              # Bash/Shell naming (kebab-case CLI), safety, shellcheck & Bats
+│   └── spec-driven-core.md             # Spec-first & Issue-as-Source-of-Truth core rules
+├── standards/                          # Stack-specific standards (loaded on demand)
+│   ├── go-cli.md                       # Go CLI architecture, error wrapping & testing
+│   ├── java.md                         # Modern Java idioms, null-safety, Maven/Gradle verification
+│   ├── embedded.md                     # Embedded C/C++ deterministic memory, ISR safety, HAL
+│   └── shell.md                        # Bash/Shell naming (kebab-case CLI), safety, shellcheck & Bats
 ├── skills/                             # Universal lifecycle skills (agy slash commands)
 │   ├── 00-issue-generation/SKILL.md    # Mandatory Git issue drafting template (.issue-draft.md)
 │   ├── 01-spec-generation/
@@ -71,43 +72,24 @@ Choose the **model (`--model` / `/model`)** for its base instincts (**Gemini 4 A
 
 ## Multi-stack domain rule routing
 
-Lifecycle skills automatically inspect the current working directory (`CWD`) and load the matching rule file via `fragments/stack-routing.md`:
+Lifecycle skills automatically inspect the current working directory (`CWD`) and load the matching standard via `fragments/stack-routing.md`:
 
-- **Go**: Triggered by `go.mod` $\rightarrow$ enforces [rules/go-cli-standards.md](rules/go-cli-standards.md) (`go test -race ./...`, `go vet ./...`).
-- **Java**: Triggered by `pom.xml` / `build.gradle` $\rightarrow$ enforces [rules/java-standards.md](rules/java-standards.md) (`./mvnw test` / `./gradlew check`).
-- **Embedded C/C++**: Triggered by `CMakeLists.txt` / `platformio.ini` / `Kconfig` / `*.ld` $\rightarrow$ enforces [rules/embedded-standards.md](rules/embedded-standards.md) (deterministic memory, fixed-width types, ISR safety).
-- **Shell / Bash**: Triggered by `*.sh` / `*.bats` / `.bashrc.d/` $\rightarrow$ enforces [rules/shell-standards.md](rules/shell-standards.md) (`kebab-case` public interfaces, `shellcheck`, `bats`).
+- **Go**: Triggered by `go.mod` $\rightarrow$ enforces [standards/go-cli.md](standards/go-cli.md) (`go test -race ./...`, `go vet ./...`).
+- **Java**: Triggered by `pom.xml` / `build.gradle` $\rightarrow$ enforces [standards/java.md](standards/java.md) (`./mvnw test` / `./gradlew check`).
+- **Embedded C/C++**: Triggered by `CMakeLists.txt` / `platformio.ini` / `Kconfig` / `*.ld` $\rightarrow$ enforces [standards/embedded.md](standards/embedded.md) (deterministic memory, fixed-width types, ISR safety).
+- **Shell / Bash**: Triggered by `*.sh` / `*.bats` / `.bashrc.d/` $\rightarrow$ enforces [standards/shell.md](standards/shell.md) (`kebab-case` public interfaces, `shellcheck`, `bats`).
 
-To add a new stack (e.g. Rust, Python), create `rules/<stack>-standards.md` and add one row to `fragments/stack-routing.md`.
+To add a new stack (e.g. Rust, Python), create `standards/<stack>.md` and add one row to `fragments/stack-routing.md`.
 
 ---
 
-## Machine setup for `antigravity-cli` (`agy`)
+## Configuring Antigravity (`agy`)
 
-All internal paths inside `agent-standards` (`skills.json`, `rules/`, `skills/`, `fragments/`) are strictly relative, so the repository can be cloned to any workspace location or mounted as a submodule inside an `infra` / dotfiles repository.
-
-### 1. Portable symlink / dotfiles integration (recommended)
-Link the repository root (or its `rules/` and `skills/` directories) into `~/.gemini` via your dotfiles bootstrapper so no workspace path is hardcoded in user config files:
+`agy-standards` is packaged as a native Antigravity plugin (`plugin.json`). Linking the repository into `~/.gemini/config/plugins/` automatically registers both the global rules (`rules/`) and all lifecycle skills (`skills/`) with a single directory symlink:
 
 ```bash
-# Link global baseline rules and skills directly into ~/.gemini
-ln -sfn "<path-to-agent-standards>/rules/GEMINI.md" ~/.gemini/GEMINI.md
-ln -sfn "<path-to-agent-standards>/rules/spec-driven-core.md" ~/.gemini/spec-driven-core.md
-mkdir -p ~/.gemini/config
-ln -sfn "<path-to-agent-standards>/skills" ~/.gemini/config/skills
-```
-
-### 2. Alternative: `skills.json` inheritance
-If managing multiple skill sources in `~/.gemini/config/skills.json`, inherit from `skills.json`:
-
-```json
-{
-  "inherits": [
-    {
-      "path": "~/.gemini/agent-standards/skills.json"
-    }
-  ]
-}
+mkdir -p ~/.gemini/config/plugins
+ln -sfn "<path-to-agy-standards>" ~/.gemini/config/plugins/agy-standards
 ```
 
 ---

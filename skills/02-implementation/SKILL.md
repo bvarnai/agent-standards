@@ -12,7 +12,7 @@ metadata:
 ## Constraints & domain rules
 1. Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 2. Read and enforce [spec-driven-core.md](../../rules/spec-driven-core.md).
-3. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active domain standards (`go-cli-standards.md`, `java-standards.md`, `embedded-standards.md`, `shell-standards.md`).
+3. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active domain standards (`go-cli.md`, `java.md`, `embedded.md`, `shell.md`).
 
 ## Input contract & living spec synchronization
 1. **Source of truth**:

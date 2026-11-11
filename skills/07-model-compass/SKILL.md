@@ -24,7 +24,7 @@ Gather the active candidate models from:
 4. **Pre-flight check**: If internal or preview model names exist in the user's `/model` menu that are not publicly documented, ask the user to list the models currently shown in their `/model` selector before finalizing.
 
 ### 2. Evaluate against lifecycle task profiles
-Classify the available models across the five `agent-standards` execution profiles:
+Classify the available models across the five `agy-standards` execution profiles:
 
 | Task profile | Lifecycle stages | Primary bottleneck | Key selection criteria | Default effort |
 | :--- | :--- | :--- | :--- | :--- |
