@@ -15,8 +15,9 @@ agy-standards/
 ├── README.md                           # Architecture and usage guide
 ├── plugin.json                         # Native agy plugin manifest
 ├── rules/                              # Universal always-on rules (auto-loaded by plugin)
-│   ├── GEMINI.md                       # Baseline rules (Platform assumptions, LF, Tool Policy)
-│   └── spec-driven-core.md             # Spec-first & Issue-as-Source-of-Truth core rules
+│   ├── GEMINI.md                       # Baseline rules (LF, Markdown formatting, Tool policy)
+│   ├── spec-driven.md                  # Spec-first & Issue-as-Source-of-Truth rules
+│   └── git.md                          # Trunk-based branching, Conventional Commits & PR hygiene
 ├── standards/                          # Stack-specific standards (loaded on demand)
 │   ├── go-cli.md                       # Go CLI architecture, error wrapping & testing
 │   ├── java.md                         # Modern Java idioms, null-safety, Maven/Gradle verification

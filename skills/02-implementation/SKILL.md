@@ -11,15 +11,12 @@ metadata:
 
 ## Constraints & domain rules
 1. Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
-2. Read and enforce [spec-driven-core.md](../../rules/spec-driven-core.md).
-3. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active domain standards (`go-cli.md`, `java.md`, `embedded.md`, `shell.md`).
+2. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active domain standards (`go-cli.md`, `java.md`, `embedded.md`, `shell.md`).
 
-## Input contract & living spec synchronization
+## Input contract
 1. **Source of truth**:
    - Require an approved specification in `docs/spec/` or an explicit Git issue. If neither exists, halt and invoke `/01-spec-generation` or `/00-issue-generation` first.
    - When `docs/spec/global.md` exists alongside `docs/spec/<unit>.md`, read both `global.md` (for shared architecture, error codes, execution boundaries, and package dependency rules) and the target `<unit>.md` before writing code.
-2. **Living spec sync (prevent spec drift)**:
-   - In repositories that maintain `docs/spec/`, if the target Git issue introduces or modifies CLI flags, subcommands, public interfaces, configuration schemas, exit codes, or execution flows, update `docs/spec/` first (or in the same atomic change) so `docs/spec/` never drifts behind the implementation.
 
 ## Implementation workflows
 

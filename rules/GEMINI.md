@@ -1,18 +1,7 @@
-# Platform environment & execution baseline
+# Engineering & execution baseline
 
-@[Spec-driven core](./spec-driven-core.md)
-
-## Issue drafting trigger
-Whenever the user asks you to write, draft, or generate an "issue" (e.g. using prefix `feat:`, `fix:`, `refactor:`, `perf:`, `docs:`, `test:`, `ci:`, `build:`, `chore:`), activate the `00-issue-generation` skill, output the mandatory issue layout template, and write the raw Markdown directly to `.issue-draft.md` in `CWD` (`Overwrite: true`, pre-authorized without requiring an extra confirmation prompt).
-
-## Git commit & branch hygiene
-- **Conventional commits:** Format all commit messages as `<type>(<scope>): <description>` in lowercase imperative mood (`feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `ci`, `build`, `chore`), referencing the source issue (`Closes #<id>` or `Refs #<id>`) in the commit body or footer when applicable.
-- **Branch naming:** Use `<type>/<issue-id>-<kebab-slug>` (or `<type>/<kebab-slug>` when no issue ID exists).
-- **Pull requests:** Keep PR descriptions minimal—link directly to the primary Git issue and `docs/spec/` file(s) without duplicating the issue body.
-
-## Platform environment assumptions
-- **Windows:** Assume `agy` is running in a Git Bash environment. The `agy` executable is launched from a Git Bash shell directly.
-- **Linux:** Assume it is a WSL-based Ubuntu instance. The `agy` executable is launched from a Bash shell directly.
+@[Spec-driven principles](./spec-driven.md)
+@[Git & branching](./git.md)
 
 ## Line endings & Markdown formatting
 - **LF line endings:** Always use Unix-style (`LF`) line endings when generating or modifying files, even when operating on Windows.

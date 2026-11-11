@@ -1,4 +1,4 @@
-# Spec-driven core engineering principles
+# Spec-driven engineering principles
 
 The specification or issue is our primary source of truth. Every technical detail, test case, and edge case must reside here before modifying implementation code.
 

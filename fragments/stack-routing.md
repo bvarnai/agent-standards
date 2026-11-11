@@ -14,4 +14,4 @@ When executing lifecycle skills in a target workspace, inspect the current worki
 2. **Primary stack vs. helper scripts:** When a Go, Java, or Embedded repository also contains auxiliary shell scripts (`scripts/*.sh`, `bin/*`), the primary build marker (`go.mod`, `pom.xml`, `CMakeLists.txt`) governs overall project architecture, while [shell.md](../standards/shell.md) additionally applies whenever authoring, editing, or auditing shell scripts and `.bats` tests.
 
 ## Unmatched stacks
-If no known marker matches, follow the universal [spec-driven-core.md](../rules/spec-driven-core.md) principles and prompt the user for the primary test runner and linting commands before editing code.
+If no known marker matches, follow the universal [spec-driven.md](../rules/spec-driven.md) principles and prompt the user for the primary test runner and linting commands before editing code.

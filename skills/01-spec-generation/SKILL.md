@@ -11,8 +11,7 @@ metadata:
 
 ## Constraints & domain rules
 1. Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
-2. Read and enforce [spec-driven-core.md](../../rules/spec-driven-core.md).
-3. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active domain standard(s) (`go-cli.md`, `java.md`, `embedded.md`, `shell.md`).
+2. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active domain standard(s) (`go-cli.md`, `java.md`, `embedded.md`, `shell.md`).
 
 ## Domain template routing
 Select and read the specification template matching the target system's domain before drafting:
