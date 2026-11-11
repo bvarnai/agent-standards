@@ -13,7 +13,7 @@ Instead of relying on long chat histories where requirements get lost, the workf
 - **Specifications (`docs/spec/`)**: Living requirements and design documents that describe how the project works (CLI flags, APIs, configuration, and behavior).
 - **Issues**: Small, well-defined tasks that describe what needs to change, the edge cases to handle, and how to test it.
 
-Because the requirements and design are written down up front, each coding or review step can run in a fresh session with clear boundaries.
+Because the requirements and design are written down up front, each coding or review step can run in a fresh session with clear boundaries. *(See [docs/philosophy.md](docs/philosophy.md) for background notes on why this workflow is structured this way.)*
 
 ---
 
@@ -54,11 +54,10 @@ flowchart LR
 
 ---
 
-## Repository layout
+## Repository organization
 
 ```text
 agy-standards/
-├── README.md                           # Architecture and usage guide
 ├── plugin.json                         # Native agy plugin manifest
 ├── rules/                              # Universal always-on rules (auto-loaded by plugin)
 │   ├── GEMINI.md                       # Rule entrypoint (@-imports rules below + formatting & tool policy)
@@ -70,20 +69,9 @@ agy-standards/
 │   ├── java.md                         # Modern Java idioms, null-safety, Maven/Gradle verification
 │   ├── embedded.md                     # Embedded C/C++ deterministic memory, ISR safety, HAL
 │   └── shell.md                        # Bash/Shell naming (kebab-case CLI), safety, shellcheck & Bats
-├── skills/                             # Universal lifecycle skills (agy slash commands)
-│   ├── 00-spec/
-│   │   ├── SKILL.md                    # Interactive spec authoring & domain template router
-│   │   └── templates/
-│   │       └── cli.md                  # Field-proven CLI spec templates (global.md + <subcommand>.md)
-│   ├── 01-issue/SKILL.md               # Mandatory issue drafting template (.issue-draft.md)
-│   ├── 02-implement/SKILL.md           # Spec sync, TDD implementation & git-brx branch/PR flow
-│   ├── 03-docs/SKILL.md                # Documentation & tone audit
-│   ├── 04-audit/SKILL.md               # Read-only pre-release or branch readiness audit
-│   ├── 05-release/SKILL.md             # Version bump, changelog & release tag
-│   ├── 06-harmonize/SKILL.md           # Cross-repo gap analysis & uplift plan
-│   └── 07-models/SKILL.md              # Periodic model benchmark & compass updater
-└── fragments/                          # Reusable blocks & contracts
-    └── strict-technical-tone.md        # Concise developer-to-developer output constraint
+├── skills/                             # Lifecycle slash commands (/00-spec .. /07-models)
+│   └── <NN-skill>/SKILL.md             # Skill definition (+ templates/ where applicable)
+└── fragments/                          # Shared prompt constraints (e.g., strict-technical-tone.md)
 ```
 
 ---
