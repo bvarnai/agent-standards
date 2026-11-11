@@ -1,8 +1,8 @@
 ---
-name: 04-pre-release-audit
-description: Execute a strict, read-only readiness audit across code, specifications, user documentation, test suites, and CI/release pipelines (or scoped to a branch/PR diff) to identify P0 blockers and technical debt. Activate before tagging a release, reviewing a branch, or running /04-pre-release-audit.
+name: 04-audit
+description: Execute a strict, read-only readiness audit across code, specifications, user documentation, test suites, and CI/release pipelines (or scoped to a branch/PR diff) to identify P0 blockers and technical debt. Activate before tagging a release, reviewing a branch, or running /04-audit.
 metadata:
-  lifecycle_stage: "04-pre-release"
+  lifecycle_stage: "04-audit"
   mode: "interactive | one-shot"
   recommended_flags: "--effort high"
 ---

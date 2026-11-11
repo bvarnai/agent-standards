@@ -1,8 +1,8 @@
 ---
-name: 03-docs-review
-description: Audit and refine user guides, READMEs, and reference documentation for pragmatic developer-to-developer tone, plain active English, sentence-case headings, factual spec/codebase accuracy, and link integrity. Activate when reviewing documentation or running /03-docs-review.
+name: 03-docs
+description: Audit and refine user guides, READMEs, and reference documentation for pragmatic developer-to-developer tone, plain active English, sentence-case headings, factual spec/codebase accuracy, and link integrity. Activate when reviewing documentation or running /03-docs.
 metadata:
-  lifecycle_stage: "03-docs-review"
+  lifecycle_stage: "03-docs"
   mode: "interactive"
   recommended_flags: "--effort medium"
 ---

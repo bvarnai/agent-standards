@@ -1,13 +1,13 @@
 ---
-name: 00-issue-generation
-description: Strictly draft issues using the mandatory issue template with clear problem context, acceptance criteria, edge cases, and verification plans, saving the raw Markdown to .issue-draft.md. Activate whenever asked to write, draft, or generate an issue (feat:, fix:, refactor:, perf:, docs:, test:, ci:, build:, chore:) or running /00-issue-generation.
+name: 01-issue
+description: Strictly draft issues using the mandatory issue template with clear problem context, acceptance criteria, edge cases, and verification plans, saving the raw Markdown to .issue-draft.md. Activate whenever asked to write, draft, or generate an issue (feat:, fix:, refactor:, perf:, docs:, test:, ci:, build:, chore:) or running /01-issue.
 metadata:
-  lifecycle_stage: "00-issue"
+  lifecycle_stage: "01-issue"
   mode: "interactive"
   recommended_flags: "--effort medium"
 ---
 
-# 00 — Issue generation
+# 01 — Issue drafting
 
 ## Constraints
 - Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).

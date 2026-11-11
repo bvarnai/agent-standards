@@ -1,8 +1,8 @@
 ---
-name: 02-implementation
-description: Implement features, refactors, or bug fixes strictly traceable to an approved specification or issue, enforcing stack-specific engineering standards, living spec synchronization, and automated test verification. Activate when implementing code, fixing bugs, or running /02-implementation.
+name: 02-implement
+description: Implement features, refactors, or bug fixes strictly traceable to an approved specification or issue, enforcing stack-specific engineering standards, living spec synchronization, and automated test verification. Activate when implementing code, fixing bugs, or running /02-implement.
 metadata:
-  lifecycle_stage: "02-implementation"
+  lifecycle_stage: "02-implement"
   mode: "interactive"
   recommended_flags: "--effort medium"
 ---
@@ -14,7 +14,7 @@ metadata:
 
 ## Input contract
 1. **Source of truth**:
-   - Require an explicit issue (or `.issue-draft.md` in `CWD`) and/or approved specification in `docs/spec/`. If neither exists, halt and invoke `/00-issue-generation` or `/01-spec-generation` first.
+   - Require an explicit issue (or `.issue-draft.md` in `CWD`) and/or approved specification in `docs/spec/`. If neither exists, halt and invoke `/01-issue` or `/00-spec` first.
    - When `docs/spec/global.md` exists alongside `docs/spec/<unit>.md`, read both `global.md` (for shared architecture, error codes, execution boundaries, and package dependency rules) and the target `<unit>.md` before writing code.
 2. **Topic branch check**:
    - Inspect `git branch --show-current`. If working on a tracked issue while still on `main`, propose creating the topic branch first via `git brx create issue/<id> -y` (or the standard `git` fallback in [`rules/git.md`](../../rules/git.md) if `git-brx` is not installed).

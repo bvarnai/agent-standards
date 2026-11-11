@@ -1,13 +1,13 @@
 ---
-name: 01-spec-generation
-description: Author or update authoritative technical specifications under docs/spec/ (global.md for system-wide architecture/invariants and <unit>.md for subcommands or modules) before writing implementation code. Activate when planning architecture, reverse-engineering legacy code, or running /01-spec-generation.
+name: 00-spec
+description: Author or update authoritative technical specifications under docs/spec/ (global.md for system-wide architecture/invariants and <unit>.md for subcommands or modules) before writing implementation code. Activate when planning architecture, reverse-engineering legacy code, or running /00-spec.
 metadata:
-  lifecycle_stage: "01-spec"
+  lifecycle_stage: "00-spec"
   mode: "interactive"
   recommended_flags: "--mode plan --effort high"
 ---
 
-# 01 — Technical specification generation
+# 00 — Technical specification authoring
 
 ## Constraints
 - Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).

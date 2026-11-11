@@ -10,23 +10,23 @@
 
 ```mermaid
 flowchart LR
-    Spec["/01-spec-generation<br/>(Bootstrap docs/spec/)"]
+    Spec["0. /00-spec<br/>(Bootstrap docs/spec/)"]
     Plan["Plan mode<br/>(--mode plan / /plan)"]
-    Issue["/00-issue-generation<br/>(.issue-draft.md)"]
-    Code["/02-implementation<br/>(Spec + Code + Tests)"]
-    Docs["/03-docs-review"]
-    Audit["/04-pre-release-audit"]
-    Release["/05-release"]
+    Issue["1. /01-issue<br/>(.issue-draft.md)"]
+    Code["2. /02-implement<br/>(Spec + Code + Tests)"]
+    Docs["3. /03-docs"]
+    Audit["4. /04-audit"]
+    Release["5. /05-release"]
 
     Spec -.->|"New project / subsystem"| Plan
     Plan --> Issue --> Code --> Docs --> Audit --> Release
 ```
 
-1. **Bootstrap specs (`/01-spec-generation`)**: Author initial `docs/spec/` files when starting a new project, adding a major subsystem, or reverse-engineering legacy code.
+1. **Bootstrap specs (`/00-spec`)**: Author initial `docs/spec/` files when starting a new project, adding a major subsystem, or reverse-engineering legacy code.
 2. **Plan (`--mode plan` / `/plan`)**: Discuss and align on a feature, refactor, or fix before writing code.
-3. **Create issue (`/00-issue-generation`)**: Turn the agreed plan into a structured issue (`.issue-draft.md`) with acceptance criteria, edge cases, and test plans.
-4. **Implement (`/02-implementation`)**: Create the topic branch via [`git-brx`](https://github.com/bvarnai/git-brx) (`git brx create issue/<id> -y`), update `docs/spec/` and code, run automated tests/linters, and publish for review (`git brx publish` $\rightarrow$ `git brx review`).
-5. **Review, audit & release (`/03` $\rightarrow$ `/04` $\rightarrow$ `/05`)**: Refine user docs, run a read-only release audit, and cut the release tag.
+3. **Create issue (`/01-issue`)**: Turn the agreed plan into a structured issue (`.issue-draft.md`) with acceptance criteria, edge cases, and test plans.
+4. **Implement (`/02-implement`)**: Create the topic branch via [`git-brx`](https://github.com/bvarnai/git-brx) (`git brx create issue/<id> -y`), update `docs/spec/` and code, run automated tests/linters, and publish for review (`git brx publish` $\rightarrow$ `git brx review`).
+5. **Review, audit & release (`/03-docs` $\rightarrow$ `/04-audit` $\rightarrow$ `/05-release`)**: Refine user docs, run a read-only release audit, and cut the release tag.
 
 ### Companion tool: [`git-brx`](https://github.com/bvarnai/git-brx) (optional, recommended)
 
@@ -35,7 +35,7 @@ flowchart LR
 - **`agy-standards`** is the **cognitive & specification layer** (how `agy` plans, drafts issues, writes specs, codes, tests, and audits).
 - **`git-brx`** is the **mechanical Git & tracker execution engine** (`git brx create`, `sync`, `update`, `resolve`, `publish`, `review`, `delete`).
 
-`git-brx` is **recommended but not mandatory**: when `git-brx` is installed on `PATH`, [`rules/git.md`](rules/git.md) and `/02-implementation` use it automatically for branch creation, linear rebase syncing, and PR submission; when it is not installed, `agy` falls back to standard `git` commands following the same trunk-based conventions.
+`git-brx` is **recommended but not mandatory**: when `git-brx` is installed on `PATH`, [`rules/git.md`](rules/git.md) and `/02-implement` use it automatically for branch creation, linear rebase syncing, and PR submission; when it is not installed, `agy` falls back to standard `git` commands following the same trunk-based conventions.
 
 ---
 
@@ -56,17 +56,17 @@ agy-standards/
 │   ├── embedded.md                     # Embedded C/C++ deterministic memory, ISR safety, HAL
 │   └── shell.md                        # Bash/Shell naming (kebab-case CLI), safety, shellcheck & Bats
 ├── skills/                             # Universal lifecycle skills (agy slash commands)
-│   ├── 00-issue-generation/SKILL.md    # Mandatory issue drafting template (.issue-draft.md)
-│   ├── 01-spec-generation/
+│   ├── 00-spec/
 │   │   ├── SKILL.md                    # Interactive spec authoring & domain template router
 │   │   └── templates/
 │   │       └── cli.md                  # Field-proven CLI spec templates (global.md + <subcommand>.md)
-│   ├── 02-implementation/SKILL.md      # Spec-driven implementation + test verification
-│   ├── 03-docs-review/SKILL.md         # Documentation & tone audit
-│   ├── 04-pre-release-audit/SKILL.md   # One-shot pre-release readiness audit
+│   ├── 01-issue/SKILL.md               # Mandatory issue drafting template (.issue-draft.md)
+│   ├── 02-implement/SKILL.md           # Spec-driven implementation + test verification
+│   ├── 03-docs/SKILL.md                # Documentation & tone audit
+│   ├── 04-audit/SKILL.md               # Read-only pre-release or branch readiness audit
 │   ├── 05-release/SKILL.md             # Version bump, changelog & release tag
-│   ├── 06-project-harmonization/SKILL.md # Cross-repo gap analysis & uplift plan
-│   └── 07-model-compass/SKILL.md       # Periodic model benchmark & compass updater
+│   ├── 06-harmonize/SKILL.md           # Cross-repo gap analysis & uplift plan
+│   └── 07-models/SKILL.md              # Periodic model benchmark & compass updater
 └── fragments/                          # Reusable blocks & contracts
     └── strict-technical-tone.md        # Concise developer-to-developer output constraint
 ```
@@ -81,19 +81,19 @@ Run these skills from inside the `agy` TUI or directly from your terminal:
 
 | Stage | Slash command | CLI interactive (`agy -i`) | CLI headless / audit (`agy -p`) | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
-| **0. Issue** | `/00-issue-generation` | `agy --effort medium -i "/00-issue-generation feat: add foo"` | `agy --effort medium -p "/00-issue-generation feat: add foo"` | Draft strict, spec-driven issues. |
-| **1. Spec** | `/01-spec-generation` | `agy --mode plan --effort high -i "/01-spec-generation"` | — | Author or update technical specs in `docs/spec/`. |
-| **2. Code** | `/02-implementation` | `agy --effort medium -i "/02-implementation #42"` | — | Implement features/fixes with spec sync & tests. |
-| **3. Docs** | `/03-docs-review` | `agy --effort medium -i "/03-docs-review"` | `agy --effort medium -p "/03-docs-review"` | Audit docs for tone and factual accuracy. |
-| **4. Audit** | `/04-pre-release-audit` | `agy --effort high -i "/04-pre-release-audit"` | `agy --effort high -p "/04-pre-release-audit"` | Read-only release or branch readiness audit. |
+| **0. Spec** | `/00-spec` | `agy --mode plan --effort high -i "/00-spec"` | — | Author or update technical specs in `docs/spec/`. |
+| **1. Issue** | `/01-issue` | `agy --effort medium -i "/01-issue feat: add foo"` | `agy --effort medium -p "/01-issue feat: add foo"` | Draft strict, spec-driven issues. |
+| **2. Implement** | `/02-implement` | `agy --effort medium -i "/02-implement #42"` | — | Implement features/fixes with spec sync & tests. |
+| **3. Docs** | `/03-docs` | `agy --effort medium -i "/03-docs"` | `agy --effort medium -p "/03-docs"` | Audit docs for tone and factual accuracy. |
+| **4. Audit** | `/04-audit` | `agy --effort high -i "/04-audit"` | `agy --effort high -p "/04-audit"` | Read-only release or branch readiness audit. |
 | **5. Release** | `/05-release` | `agy --effort low -i "/05-release v1.2.0"` | — | Finalize changelog, bump version, stage tags. |
 
 ### Occasional & maintenance tasks
 
 | Task | Slash command | CLI interactive (`agy -i`) | Purpose |
 | :--- | :--- | :--- | :--- |
-| **6. Harmonize** | `/06-project-harmonization` | `agy --mode plan --effort high -i "/06-project-harmonization"` | Compare two repos & plan structural uplift. |
-| **7. Models** | `/07-model-compass` | `agy --effort medium -i "/07-model-compass"` | Review available models & update the compass table. |
+| **6. Harmonize** | `/06-harmonize` | `agy --mode plan --effort high -i "/06-harmonize"` | Compare two repos & plan structural uplift. |
+| **7. Models** | `/07-models` | `agy --effort medium -i "/07-models"` | Review available models & update the compass table. |
 
 ### Model & effort mental compass
 
@@ -101,10 +101,10 @@ Choose the **model (`--model` / `/model`)** for its base instincts (**Gemini 4 A
 
 | Engineering goal | Lifecycle stages | Recommended model | Effort & mode | Why this combination works best |
 | :--- | :--- | :--- | :--- | :--- |
-| **System architecture, specs & cross-repo uplift** | `01-spec-generation`<br>`06-project-harmonization` | **Gemini 4 Argon** | `--mode plan --effort high` | Deepest multi-file reasoning, legacy reverse-engineering, and interface/invariant synthesis before writing code. |
-| **Pre-release readiness & cross-artifact audit** | `04-pre-release-audit` | **Gemini 4 Argon**<br>*(or **Gemini 3.8** for branch diffs)* | `--effort high`<br>*(or `medium` for branch diffs)* | Holds Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI invariants in working memory simultaneously to catch subtle drift without false positives. |
-| **Hands-on coding, TDD & tool execution loops** | `02-implementation`<br>`00-issue-generation` | **Gemini 3.8** | `--effort medium`<br>*(or `high` for race/concurrency bugs)* | Stronger coding instincts and surgical diffs; follows existing code style without over-abstraction and iterates faster across 10–20 edit/test steps. |
-| **Documentation tone & accuracy review** | `03-docs-review` | **Gemini 3.8**<br>*(or **Gemini 4 Argon**)* | `--effort medium` | Verifies flags/examples against code while keeping developer prose direct, natural, and free of stiff AI phrasing. |
+| **System architecture, specs & cross-repo uplift** | `00-spec`<br>`06-harmonize` | **Gemini 4 Argon** | `--mode plan --effort high` | Deepest multi-file reasoning, legacy reverse-engineering, and interface/invariant synthesis before writing code. |
+| **Pre-release readiness & cross-artifact audit** | `04-audit` | **Gemini 4 Argon**<br>*(or **Gemini 3.8** for branch diffs)* | `--effort high`<br>*(or `medium` for branch diffs)* | Holds Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI invariants in working memory simultaneously to catch subtle drift without false positives. |
+| **Hands-on coding, TDD & tool execution loops** | `02-implement`<br>`01-issue` | **Gemini 3.8** | `--effort medium`<br>*(or `high` for race/concurrency bugs)* | Stronger coding instincts and surgical diffs; follows existing code style without over-abstraction and iterates faster across 10–20 edit/test steps. |
+| **Documentation tone & accuracy review** | `03-docs` | **Gemini 3.8**<br>*(or **Gemini 4 Argon**)* | `--effort medium` | Verifies flags/examples against code while keeping developer prose direct, natural, and free of stiff AI phrasing. |
 | **Mechanical release cut & changelog bump** | `05-release`<br>*(plus trivial `chore:`/`docs:` issues)* | **Gemini 3.8** *(or **Flash** / **Argon Low**)* | `--effort low` | Purely deterministic execution (SemVer bump, `CHANGELOG.md` move, Git tag staging); `low` prevents re-auditing and minimizes latency. |
 
 ---

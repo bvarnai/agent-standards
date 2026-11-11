@@ -10,7 +10,7 @@ metadata:
 # 05 — Release
 
 ## Constraints & execution scope
-1. **No re-auditing**: Assume `/04-pre-release-audit` is complete and all `P0` blockers are resolved. Do **not** re-audit documentation, CI workflows, governance files, or code quality.
+1. **No re-auditing**: Assume `/04-audit` is complete and all `P0` blockers are resolved. Do **not** re-audit documentation, CI workflows, governance files, or code quality.
 2. **Tone**: Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 3. **Verification gate**: Never execute `git commit`, `git tag`, or `git push` without explicit user confirmation.
 

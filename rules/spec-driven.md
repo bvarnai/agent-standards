@@ -5,9 +5,9 @@ Technical specifications (`docs/spec/`) define the living state of the system, a
 ## Core rules
 
 1. **Plan $\rightarrow$ Issue $\rightarrow$ Spec & Code workflow**:
-   - **System specifications (`docs/spec/`)**: Author or bootstrap system and module specifications via `/01-spec-generation` when starting a new project, adding a major subsystem, or reverse-engineering legacy code.
-   - **Change tracking (issues)**: Explore and align on new features, refactors, or fixes in Plan mode (`--mode plan` / `/plan`), then crystallize the agreed plan into an issue via `/00-issue-generation` before writing implementation code.
-   - **Implementation (`/02-implementation`)**: Pull requests and commit diffs must trace directly to the target issue and `docs/spec/`; PR descriptions and reviews are strictly for verifying code quality against them.
+   - **System specifications (`docs/spec/`)**: Author or bootstrap system and module specifications via `/00-spec` when starting a new project, adding a major subsystem, or reverse-engineering legacy code.
+   - **Change tracking (issues)**: Explore and align on new features, refactors, or fixes in Plan mode (`--mode plan` / `/plan`), then crystallize the agreed plan into an issue via `/01-issue` before writing implementation code.
+   - **Implementation (`/02-implement`)**: Pull requests and commit diffs must trace directly to the target issue and `docs/spec/`; PR descriptions and reviews are strictly for verifying code quality against them.
 2. **Living spec synchronization (no spec drift)**:
    - Implementing an issue that adds or modifies CLI flags, subcommands, public APIs, configuration schemas, exit codes, or execution flows **must** update `docs/spec/` first (or in the same atomic change) so `docs/spec/` never drifts behind closed issues.
    - If implementation reveals unforeseen technical blockers, update the specification and issue first before proceeding with divergent code.
