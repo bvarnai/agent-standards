@@ -14,8 +14,10 @@ metadata:
 
 ## Input contract
 1. **Source of truth**:
-   - Require an explicit issue and/or approved specification in `docs/spec/`. If neither exists, halt and invoke `/00-issue-generation` or `/01-spec-generation` first.
+   - Require an explicit issue (or `.issue-draft.md` in `CWD`) and/or approved specification in `docs/spec/`. If neither exists, halt and invoke `/00-issue-generation` or `/01-spec-generation` first.
    - When `docs/spec/global.md` exists alongside `docs/spec/<unit>.md`, read both `global.md` (for shared architecture, error codes, execution boundaries, and package dependency rules) and the target `<unit>.md` before writing code.
+2. **Topic branch check**:
+   - Inspect `git branch --show-current`. If working on a tracked issue while still on `main`, propose creating the topic branch first via `git brx create issue/<id> -y` (or the standard `git` fallback in [`rules/git.md`](../../rules/git.md) if `git-brx` is not installed).
 
 ## Implementation workflows
 
@@ -39,9 +41,11 @@ Upon passing verification, output:
    | Acceptance criterion / edge case | Status | Verifying test / file |
    | :--- | :--- | :--- |
    | ... | Pass | `path/to/test_file:TestName` |
-2. **Proposed Git commit & PR commands** (wait for user confirmation before executing mutating Git commands):
+2. **Proposed Git & `git-brx` commands** (use the standard `git` fallbacks in [`rules/git.md`](../../rules/git.md) if `git-brx` is not installed; never stage `.issue-draft.md`; wait for user confirmation before executing mutating Git commands):
    ```bash
    git add <modified-files>
-   git commit -m "<type>(<scope>): <concise summary>" -m "Closes #<issue-id>"
+   git commit -m "<type>(#<issue-id>): <concise summary>" -m "Closes #<issue-id>"
+   git brx sync
+   git brx publish
+   git brx review
    ```
-   If opening a Pull Request, propose a minimal `gh pr create` command that links directly to `#<issue-id>` and `docs/spec/<unit>.md` without duplicating the issue body.

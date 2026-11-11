@@ -25,8 +25,17 @@ flowchart LR
 1. **Bootstrap specs (`/01-spec-generation`)**: Author initial `docs/spec/` files when starting a new project, adding a major subsystem, or reverse-engineering legacy code.
 2. **Plan (`--mode plan` / `/plan`)**: Discuss and align on a feature, refactor, or fix before writing code.
 3. **Create issue (`/00-issue-generation`)**: Turn the agreed plan into a structured issue (`.issue-draft.md`) with acceptance criteria, edge cases, and test plans.
-4. **Implement (`/02-implementation`)**: Update `docs/spec/`, implement the code, and run automated tests and linters.
+4. **Implement (`/02-implementation`)**: Create the topic branch via [`git-brx`](https://github.com/bvarnai/git-brx) (`git brx create issue/<id> -y`), update `docs/spec/` and code, run automated tests/linters, and publish for review (`git brx publish` $\rightarrow$ `git brx review`).
 5. **Review, audit & release (`/03` $\rightarrow$ `/04` $\rightarrow$ `/05`)**: Refine user docs, run a read-only release audit, and cut the release tag.
+
+### Companion tool: [`git-brx`](https://github.com/bvarnai/git-brx) (optional, recommended)
+
+`agy-standards` and [`git-brx`](https://github.com/bvarnai/git-brx) are designed as two halves of the same engineering workflow:
+
+- **`agy-standards`** is the **cognitive & specification layer** (how `agy` plans, drafts issues, writes specs, codes, tests, and audits).
+- **`git-brx`** is the **mechanical Git & tracker execution engine** (`git brx create`, `sync`, `update`, `resolve`, `publish`, `review`, `delete`).
+
+`git-brx` is **recommended but not mandatory**: when `git-brx` is installed on `PATH`, [`rules/git.md`](rules/git.md) and `/02-implementation` use it automatically for branch creation, linear rebase syncing, and PR submission; when it is not installed, `agy` falls back to standard `git` commands following the same trunk-based conventions.
 
 ---
 
