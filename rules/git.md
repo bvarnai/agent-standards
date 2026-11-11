@@ -13,6 +13,6 @@
 - **Issue traceability**: Reference the source issue in the commit body or footer (`Closes #<id>` for completing an issue, `Refs #<id>` for partial/related work).
 
 ## Pull requests, tags & submodules
-- **Minimal PR descriptions**: Link directly to the primary Git issue (`Closes #<id>`) and affected `docs/spec/` file(s) without duplicating the issue body.
+- **Minimal PR descriptions**: Link directly to the primary issue (`Closes #<id>`) and affected `docs/spec/` file(s) without duplicating the issue body.
 - **Release tags**: Use annotated semantic version tags (`git tag -a vX.Y.Z -m "Release vX.Y.Z"`).
 - **Submodules**: Commit submodule pointer updates in isolated, explicit commits (`chore(submodule): bump <name>`) only after the referenced commit has been pushed to the submodule remote.

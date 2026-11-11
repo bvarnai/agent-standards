@@ -1,42 +1,36 @@
 # agy-standards
 
-An opinionated [Google Antigravity](https://antigravity.google) (`agy`) plugin that turns `agy` from an ad-hoc conversational coding assistant into a deterministic, spec-driven software engineering workflow.
+[Google Antigravity](https://antigravity.google) (`agy`) plugin bundling global rules, lifecycle skills, and language-specific standards.
 
 ---
 
-## Why `agy-standards`? (Philosophy & workflow)
+## Workflow
 
-Ad-hoc AI prompting ("vibe coding") scales poorly once a codebase grows beyond a single file: requirements stay implicit in chat history, edge cases are missed, documentation drifts behind code, and shell/Git commands trigger constant permission prompts.
-
-`agy-standards` enforces a **3-layer engineering architecture** inside Antigravity:
-
-1. **Always-on guardrails (`rules/`)**: Loaded automatically on every turn—enforcing spec-first discipline ([`spec-driven.md`](rules/spec-driven.md)), trunk-based Git and Conventional Commit hygiene ([`git.md`](rules/git.md)), and zero-prompt prefix-allowlist compliance with explicit confirmation gates before mutating files or Git state ([`GEMINI.md`](rules/GEMINI.md)).
-2. **Progressive lifecycle skills (`skills/`)**: Invoked on demand via `/00`–`/07` slash commands so only the active stage's instructions consume context.
-3. **Deterministic stack standards (`standards/` + `fragments/stack-routing.md`)**: Automatically inspects `CWD` build markers (`go.mod`, `pom.xml`, `CMakeLists.txt`, `*.sh`) and loads the matching language idioms, static analyzers, and test runners.
+`docs/spec/` defines the living state of the system, and issues define each unit of change:
 
 ```mermaid
 flowchart LR
-    Issue["0. /00-issue-generation<br/>(.issue-draft.md)"]
-    Spec["1. /01-spec-generation<br/>(docs/spec/)"]
-    Code["2. /02-implementation<br/>(Code + Tests + Spec Sync)"]
-    Docs["3. /03-docs-review<br/>(Tone & Accuracy)"]
-    Audit["4. /04-pre-release-audit<br/>(Read-Only GO/NO-GO)"]
-    Release["5. /05-release<br/>(SemVer + Changelog + Tag)"]
+    Spec["/01-spec-generation<br/>(Bootstrap docs/spec/)"]
+    Plan["Plan mode<br/>(--mode plan / /plan)"]
+    Issue["/00-issue-generation<br/>(.issue-draft.md)"]
+    Code["/02-implementation<br/>(Spec + Code + Tests)"]
+    Docs["/03-docs-review"]
+    Audit["/04-pre-release-audit"]
+    Release["/05-release"]
 
-    Issue -->|"Track A: Everyday feat/fix"| Code
-    Issue -->|"Track B: Greenfield / Major arch"| Spec
-    Spec --> Code
-    Code --> Docs --> Audit --> Release
+    Spec -.->|"New project / subsystem"| Plan
+    Plan --> Issue --> Code --> Docs --> Audit --> Release
 ```
 
-- **Track A (Everyday features & bug fixes)**: Draft a strict Git issue (`/00-issue-generation`) $\rightarrow$ implement with TDD and inline living-spec sync (`/02-implementation`).
-- **Track B (Greenfield projects, legacy rewrites & major subsystems)**: Author or update system/module specifications in `docs/spec/` (`/01-spec-generation`) $\rightarrow$ implement against the spec (`/02-implementation`).
+1. **Bootstrap specs (`/01-spec-generation`)**: Author initial `docs/spec/` files when starting a new project, adding a major subsystem, or reverse-engineering legacy code.
+2. **Plan (`--mode plan` / `/plan`)**: Discuss and align on a feature, refactor, or fix before writing code.
+3. **Create issue (`/00-issue-generation`)**: Turn the agreed plan into a structured issue (`.issue-draft.md`) with acceptance criteria, edge cases, and test plans.
+4. **Implement (`/02-implementation`)**: Update `docs/spec/`, implement the code, and run automated tests and linters.
+5. **Review, audit & release (`/03` $\rightarrow$ `/04` $\rightarrow$ `/05`)**: Refine user docs, run a read-only release audit, and cut the release tag.
 
 ---
 
 ## Repository layout
-
-The repository separates universal developer workflows from stack-specific engineering standards, ensuring consistent command execution across any programming language or project:
 
 ```text
 agy-standards/
@@ -44,15 +38,16 @@ agy-standards/
 ├── plugin.json                         # Native agy plugin manifest
 ├── rules/                              # Universal always-on rules (auto-loaded by plugin)
 │   ├── GEMINI.md                       # Baseline rules (LF, Markdown formatting, Tool policy)
-│   ├── spec-driven.md                  # Spec-first & Issue-as-Source-of-Truth rules
-│   └── git.md                          # Trunk-based branching, Conventional Commits & PR hygiene
-├── standards/                          # Stack-specific standards (loaded on demand)
+│   ├── spec-driven.md                  # Plan -> Issue -> Spec & Code rules
+│   ├── git.md                          # Trunk-based branching, Conventional Commits & PR hygiene
+│   └── stack-routing.md                # CWD marker -> domain standard routing table
+├── standards/                          # Stack-specific standards (routed via rules/stack-routing.md)
 │   ├── go-cli.md                       # Go CLI architecture, error wrapping & testing
 │   ├── java.md                         # Modern Java idioms, null-safety, Maven/Gradle verification
 │   ├── embedded.md                     # Embedded C/C++ deterministic memory, ISR safety, HAL
 │   └── shell.md                        # Bash/Shell naming (kebab-case CLI), safety, shellcheck & Bats
 ├── skills/                             # Universal lifecycle skills (agy slash commands)
-│   ├── 00-issue-generation/SKILL.md    # Mandatory Git issue drafting template (.issue-draft.md)
+│   ├── 00-issue-generation/SKILL.md    # Mandatory issue drafting template (.issue-draft.md)
 │   ├── 01-spec-generation/
 │   │   ├── SKILL.md                    # Interactive spec authoring & domain template router
 │   │   └── templates/
@@ -64,8 +59,7 @@ agy-standards/
 │   ├── 06-project-harmonization/SKILL.md # Cross-repo gap analysis & uplift plan
 │   └── 07-model-compass/SKILL.md       # Periodic model benchmark & compass updater
 └── fragments/                          # Reusable blocks & contracts
-    ├── strict-technical-tone.md        # Concise developer-to-developer output constraint
-    └── stack-routing.md                # CWD marker -> domain rule routing table
+    └── strict-technical-tone.md        # Concise developer-to-developer output constraint
 ```
 
 ---
@@ -78,7 +72,7 @@ Run these skills from inside the `agy` TUI or directly from your terminal:
 
 | Stage | Slash command | CLI interactive (`agy -i`) | CLI headless / audit (`agy -p`) | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
-| **0. Issue** | `/00-issue-generation` | `agy --effort medium -i "/00-issue-generation feat: add foo"` | `agy --effort medium -p "/00-issue-generation feat: add foo"` | Draft strict, spec-driven Git issues. |
+| **0. Issue** | `/00-issue-generation` | `agy --effort medium -i "/00-issue-generation feat: add foo"` | `agy --effort medium -p "/00-issue-generation feat: add foo"` | Draft strict, spec-driven issues. |
 | **1. Spec** | `/01-spec-generation` | `agy --mode plan --effort high -i "/01-spec-generation"` | — | Author or update technical specs in `docs/spec/`. |
 | **2. Code** | `/02-implementation` | `agy --effort medium -i "/02-implementation #42"` | — | Implement features/fixes with spec sync & tests. |
 | **3. Docs** | `/03-docs-review` | `agy --effort medium -i "/03-docs-review"` | `agy --effort medium -p "/03-docs-review"` | Audit docs for tone and factual accuracy. |
@@ -108,14 +102,14 @@ Choose the **model (`--model` / `/model`)** for its base instincts (**Gemini 4 A
 
 ## Multi-stack domain rule routing
 
-Lifecycle skills automatically inspect the current working directory (`CWD`) and load the matching standard via `fragments/stack-routing.md`:
+Always-on [`rules/stack-routing.md`](rules/stack-routing.md) inspects the current working directory (`CWD`) during planning, issue drafting, implementation, and auditing to load the matching standard:
 
 - **Go**: Triggered by `go.mod` $\rightarrow$ enforces [standards/go-cli.md](standards/go-cli.md) (`go test -race ./...`, `go vet ./...`).
 - **Java**: Triggered by `pom.xml` / `build.gradle` $\rightarrow$ enforces [standards/java.md](standards/java.md) (`./mvnw test` / `./gradlew check`).
 - **Embedded C/C++**: Triggered by `CMakeLists.txt` / `platformio.ini` / `Kconfig` / `*.ld` $\rightarrow$ enforces [standards/embedded.md](standards/embedded.md) (deterministic memory, fixed-width types, ISR safety).
 - **Shell / Bash**: Triggered by `*.sh` / `*.bats` / `.bashrc.d/` $\rightarrow$ enforces [standards/shell.md](standards/shell.md) (`kebab-case` public interfaces, `shellcheck`, `bats`).
 
-To add a new stack (e.g. Rust, Python), create `standards/<stack>.md` and add one row to `fragments/stack-routing.md`.
+To add a new stack (e.g. Rust, Python), create `standards/<stack>.md` and add one row to `rules/stack-routing.md`.
 
 ---
 

@@ -15,7 +15,7 @@ metadata:
    - Identify the **Reference repository (`<reference-repo>`)** (the target standard) and the **Target repository (`<target-repo>`)** (the project to be uplifted). If ambiguous, ask the user to confirm which repository is the reference before proceeding.
 3. **Read-only reference boundary**:
    - Treat `<reference-repo>` as strictly read-only unless the user explicitly approves backporting an improvement discovered in `<target-repo>`.
-   - Scope all build, test, and linter verification commands (via [stack-routing.md](../../fragments/stack-routing.md)) to `<target-repo>`.
+   - Scope all build, test, and linter verification commands to `<target-repo>`.
 
 ## Harmonization scope
 

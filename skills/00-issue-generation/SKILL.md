@@ -1,17 +1,16 @@
 ---
 name: 00-issue-generation
-description: Strictly draft Git issues using the mandatory issue template with clear problem context, acceptance criteria, edge cases, and verification plans, saving the raw Markdown to .issue-draft.md. Activate whenever asked to write, draft, or generate an issue (feat:, fix:, refactor:, perf:, docs:, test:, ci:, build:, chore:) or running /00-issue-generation.
+description: Strictly draft issues using the mandatory issue template with clear problem context, acceptance criteria, edge cases, and verification plans, saving the raw Markdown to .issue-draft.md. Activate whenever asked to write, draft, or generate an issue (feat:, fix:, refactor:, perf:, docs:, test:, ci:, build:, chore:) or running /00-issue-generation.
 metadata:
   lifecycle_stage: "00-issue"
   mode: "interactive"
   recommended_flags: "--effort medium"
 ---
 
-# 00 — Git issue generation
+# 00 — Issue generation
 
 ## Constraints
 - Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
-- Inspect the current working directory (`CWD`) and consult [stack-routing.md](../../fragments/stack-routing.md) to populate concrete file paths and stack-specific verification commands.
 - **Root-cause triage for `fix:` issues**: When drafting a bug/regression issue (`fix:`), inspect the relevant source files first to identify the concrete root cause, reproduction conditions, and whether `docs/spec/` requires an edge-case or error-matrix update.
 - **Proportionality**: Scale depth to complexity. For trivial `chore:` or `docs:` issues, keep design bullets minimal and explicitly mark `Edge cases & failure modes` as `None (trivial change)` rather than inventing filler.
 - **Pre-flight ambiguity check**: If the request lacks critical architectural context, ask at most 1–3 concise clarifying questions before generating the issue.

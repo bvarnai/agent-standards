@@ -1,6 +1,6 @@
 ---
 name: 02-implementation
-description: Implement features, refactors, or bug fixes strictly traceable to an approved specification or Git issue, enforcing stack-specific engineering standards, living spec synchronization, and automated test verification. Activate when implementing code, fixing bugs, or running /02-implementation.
+description: Implement features, refactors, or bug fixes strictly traceable to an approved specification or issue, enforcing stack-specific engineering standards, living spec synchronization, and automated test verification. Activate when implementing code, fixing bugs, or running /02-implementation.
 metadata:
   lifecycle_stage: "02-implementation"
   mode: "interactive"
@@ -9,13 +9,12 @@ metadata:
 
 # 02 — Spec-driven implementation
 
-## Constraints & domain rules
-1. Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
-2. Inspect `CWD` and consult [stack-routing.md](../../fragments/stack-routing.md) to load the active domain standards (`go-cli.md`, `java.md`, `embedded.md`, `shell.md`).
+## Constraints
+- Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 
 ## Input contract
 1. **Source of truth**:
-   - Require an approved specification in `docs/spec/` or an explicit Git issue. If neither exists, halt and invoke `/01-spec-generation` or `/00-issue-generation` first.
+   - Require an explicit issue and/or approved specification in `docs/spec/`. If neither exists, halt and invoke `/00-issue-generation` or `/01-spec-generation` first.
    - When `docs/spec/global.md` exists alongside `docs/spec/<unit>.md`, read both `global.md` (for shared architecture, error codes, execution boundaries, and package dependency rules) and the target `<unit>.md` before writing code.
 
 ## Implementation workflows
@@ -31,7 +30,7 @@ metadata:
 3. **Spec check**: If the bug exposed an undocumented invariant or exit code trigger, update `docs/spec/` to lock in the expected behavior.
 
 ### 3. Verification gate
-- Run the stack's automated test suite and static analysis commands from [stack-routing.md](../../fragments/stack-routing.md) (`go test -race ./...`, `go vet ./...`, `./mvnw test`, `shellcheck`, `bats`, `ctest`).
+- Run the stack's automated test suite and static analysis commands from [`rules/stack-routing.md`](../../rules/stack-routing.md) (`go test -race ./...`, `go vet ./...`, `./mvnw test`, `shellcheck`, `bats`, `ctest`).
 - Do not claim completion until all automated tests and linters pass with zero warnings or errors.
 
 ## Output contract & commit / PR handoff

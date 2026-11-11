@@ -2,6 +2,7 @@
 
 @[Spec-driven principles](./spec-driven.md)
 @[Git & branching](./git.md)
+@[Stack routing](./stack-routing.md)
 
 ## Line endings & Markdown formatting
 - **LF line endings:** Always use Unix-style (`LF`) line endings when generating or modifying files, even when operating on Windows.
