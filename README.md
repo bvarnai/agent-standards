@@ -46,6 +46,8 @@ agy-standards/
 
 Run these skills from inside the `agy` TUI or directly from your terminal:
 
+### Core development & release lifecycle
+
 | Stage | Slash command | CLI interactive (`agy -i`) | CLI headless / audit (`agy -p`) | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
 | **0. Issue** | `/00-issue-generation` | `agy --effort medium -i "/00-issue-generation feat: add foo"` | `agy --effort medium -p "/00-issue-generation feat: add foo"` | Draft strict, spec-driven Git issues. |
@@ -54,8 +56,13 @@ Run these skills from inside the `agy` TUI or directly from your terminal:
 | **3. Docs** | `/03-docs-review` | `agy --effort medium -i "/03-docs-review"` | `agy --effort medium -p "/03-docs-review"` | Audit docs for tone and factual accuracy. |
 | **4. Audit** | `/04-pre-release-audit` | `agy --effort high -i "/04-pre-release-audit"` | `agy --effort high -p "/04-pre-release-audit"` | Read-only release or branch readiness audit. |
 | **5. Release** | `/05-release` | `agy --effort low -i "/05-release v1.2.0"` | — | Finalize changelog, bump version, stage tags. |
-| **6. Harmonize** | `/06-project-harmonization` | `agy --mode plan --effort high -i "/06-project-harmonization"` | — | Compare two repos & plan structural uplift. |
-| **7. Models** | `/07-model-compass` | `agy --effort medium -i "/07-model-compass"` | — | Review available models & update the compass table. |
+
+### Occasional & maintenance tasks
+
+| Task | Slash command | CLI interactive (`agy -i`) | Purpose |
+| :--- | :--- | :--- | :--- |
+| **6. Harmonize** | `/06-project-harmonization` | `agy --mode plan --effort high -i "/06-project-harmonization"` | Compare two repos & plan structural uplift. |
+| **7. Models** | `/07-model-compass` | `agy --effort medium -i "/07-model-compass"` | Review available models & update the compass table. |
 
 ### Model & effort mental compass
 
