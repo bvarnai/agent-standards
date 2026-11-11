@@ -23,7 +23,7 @@ metadata:
 
 ### 1. Feature / refactor workflow
 1. **Day-0 scaffolding (new repositories only)**: When bootstrapping a brand-new project from `docs/spec/`, initialize standard governance and build files (`LICENSE`, `README.md`, `CHANGELOG.md`, `.gitignore`, `.gitattributes` with `* text=auto eol=lf`, and `.github/workflows/ci.yml`).
-2. **Boundary & domain implementation**: Implement narrow execution/runner interfaces (`Runner`, `Inspector`, `HAL`) and core domain logic in small, bisectable units matching the package dependency direction in `global.md`.
+2. **Boundary & domain implementation**: Implement narrow execution/runner interfaces (`Runner`, `Inspector`, `HAL`) and core domain logic in small, bisectable units matching the package dependency direction in `global.md`. Update `docs/spec/` and affected user-facing documentation (`README.md`, `docs/user-guide/`) in the same change when CLI flags, configuration keys, or user-visible behaviors change.
 3. **Automated tests**: Write unit and black-box verification tests covering every Acceptance Criterion, Edge Case, and Error Matrix row in the spec/issue.
 
 ### 2. Bug fix / regression workflow (`fix:`)
@@ -43,6 +43,7 @@ Upon passing verification, output:
    | ... | Pass | `path/to/test_file:TestName` |
 2. **Proposed Git & `git-brx` commands** (use the standard `git` fallbacks in [`rules/git.md`](../../rules/git.md) if `git-brx` is not installed; never stage `.issue-draft.md`; wait for user confirmation before executing mutating Git commands):
    ```bash
+   rm -f .issue-draft.md
    git add <modified-files>
    git commit -m "<type>(#<issue-id>): <concise summary>" -m "Closes #<issue-id>"
    git brx sync
