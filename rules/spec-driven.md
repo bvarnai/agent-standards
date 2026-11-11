@@ -5,7 +5,7 @@ Technical specifications (`docs/spec/`) define the living state of the system, a
 ## Core rules
 
 1. **Plan $\rightarrow$ Issue $\rightarrow$ Spec & Code workflow**:
-   - **System specifications (`docs/spec/`)**: Author or bootstrap system and module specifications via `/00-spec` when starting a new project, adding a major subsystem, or reverse-engineering legacy code.
+   - **System specifications (`docs/spec/`)**: Author or bootstrap system and module specifications via `/00-spec` when starting a new project, adding a new module, or documenting existing code.
    - **Change tracking (issues)**: Explore and align on new features, refactors, or fixes in Plan mode (`--mode plan` / `/plan`), then crystallize the agreed plan into an issue via `/01-issue` before writing implementation code.
    - **Implementation (`/02-implement`)**: Pull requests and commit diffs must trace directly to the target issue and `docs/spec/`; PR descriptions and reviews are strictly for verifying code quality against them.
 2. **Living spec synchronization (no spec drift)**:

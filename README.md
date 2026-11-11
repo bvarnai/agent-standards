@@ -4,29 +4,44 @@
 
 ---
 
-## Workflow
+## Approach
 
-`docs/spec/` defines the living state of the system, and issues define each unit of change:
+`agy-standards` helps structure development with `agy` around a simple habit: **write down and agree on what you want to build before writing code.**
+
+Instead of relying on long chat histories where requirements get lost, the workflow relies on two things:
+
+- **Specifications (`docs/spec/`)**: Living requirements and design documents that describe how the project works (CLI flags, APIs, configuration, and behavior).
+- **Issues**: Small, well-defined tasks that describe what needs to change, the edge cases to handle, and how to test it.
+
+Because the requirements and design are written down up front, each coding or review step can run in a fresh session with clear boundaries.
+
+---
+
+## Workflow
 
 ```mermaid
 flowchart LR
-    Spec["0. /00-spec<br/>(Bootstrap docs/spec/)"]
-    Plan["Plan mode<br/>(--mode plan / /plan)"]
-    Issue["1. /01-issue<br/>(.issue-draft.md)"]
-    Code["2. /02-implement<br/>(Spec + Code + Tests)"]
-    Docs["3. /03-docs"]
-    Audit["4. /04-audit"]
-    Release["5. /05-release"]
+    Spec["0. /00-spec<br/>(docs/spec/)"]
 
-    Spec -.->|"New project / subsystem"| Plan
-    Plan --> Issue --> Code --> Docs --> Audit --> Release
+    subgraph Daily ["Daily development loop"]
+        Plan["Plan mode<br/>(/plan)"] --> Issue["1. /01-issue"] --> Code["2. /02-implement<br/>(Spec + Code + Tests)"]
+    end
+
+    subgraph Ship ["Release pipeline"]
+        Docs["3. /03-docs"] --> Audit["4. /04-audit"] --> Release["5. /05-release"]
+    end
+
+    Spec -.->|"New project / module"| Plan
+    Code -->|"Next issue"| Plan
+    Code -->|"Ready to ship"| Docs
 ```
 
-1. **Bootstrap specs (`/00-spec`)**: Author initial `docs/spec/` files when starting a new project, adding a major subsystem, or reverse-engineering legacy code.
-2. **Plan (`--mode plan` / `/plan`)**: Discuss and align on a feature, refactor, or fix before writing code.
-3. **Create issue (`/01-issue`)**: Turn the agreed plan into a structured issue (`.issue-draft.md`) with acceptance criteria, edge cases, and test plans.
-4. **Implement (`/02-implement`)**: Create the topic branch via [`git-brx`](https://github.com/bvarnai/git-brx) (`git brx create issue/<id> -y`), update `docs/spec/` and code, run automated tests/linters, and publish for review (`git brx publish` $\rightarrow$ `git brx review`).
-5. **Review, audit & release (`/03-docs` $\rightarrow$ `/04-audit` $\rightarrow$ `/05-release`)**: Refine user docs, run a read-only release audit, and cut the release tag.
+1. **Write or update specs (`/00-spec`)**: Create initial `docs/spec/` files when starting a new project, adding a new module, or documenting existing code.
+2. **Daily development loop (`Plan` $\rightarrow$ `/01-issue` $\rightarrow$ `/02-implement`)**:
+   - **Plan (`--mode plan` / `/plan`)**: Discuss the problem and agree on the approach before touching code.
+   - **Create issue (`/01-issue`)**: Turn the agreed plan into a structured issue draft (`.issue-draft.md`) with acceptance criteria, edge cases, and test cases.
+   - **Implement (`/02-implement`)**: Create the branch (`git brx create issue/<id> -y`), update `docs/spec/` and the code together, run tests/linters, and open a PR (`git brx publish` $\rightarrow$ `git brx review`).
+3. **Release pipeline (`/03-docs` $\rightarrow$ `/04-audit` $\rightarrow$ `/05-release`)**: When ready to release, review user docs, run a read-only audit across specs, code, and tests, and cut the release tag.
 
 ### Companion tool: [`git-brx`](https://github.com/bvarnai/git-brx) (optional, recommended)
 
@@ -46,9 +61,9 @@ agy-standards/
 ├── README.md                           # Architecture and usage guide
 ├── plugin.json                         # Native agy plugin manifest
 ├── rules/                              # Universal always-on rules (auto-loaded by plugin)
-│   ├── GEMINI.md                       # Baseline rules (LF, Markdown formatting, Tool policy)
+│   ├── GEMINI.md                       # Rule entrypoint (@-imports rules below + formatting & tool policy)
 │   ├── spec-driven.md                  # Plan -> Issue -> Spec & Code rules
-│   ├── git.md                          # Trunk-based branching, Conventional Commits & PR hygiene
+│   ├── git.md                          # Trunk-based branching, git-brx / git lifecycle & commit conventions
 │   └── stack-routing.md                # CWD marker -> domain standard routing table
 ├── standards/                          # Stack-specific standards (routed via rules/stack-routing.md)
 │   ├── go-cli.md                       # Go CLI architecture, error wrapping & testing
@@ -61,7 +76,7 @@ agy-standards/
 │   │   └── templates/
 │   │       └── cli.md                  # Field-proven CLI spec templates (global.md + <subcommand>.md)
 │   ├── 01-issue/SKILL.md               # Mandatory issue drafting template (.issue-draft.md)
-│   ├── 02-implement/SKILL.md           # Spec-driven implementation + test verification
+│   ├── 02-implement/SKILL.md           # Spec sync, TDD implementation & git-brx branch/PR flow
 │   ├── 03-docs/SKILL.md                # Documentation & tone audit
 │   ├── 04-audit/SKILL.md               # Read-only pre-release or branch readiness audit
 │   ├── 05-release/SKILL.md             # Version bump, changelog & release tag
