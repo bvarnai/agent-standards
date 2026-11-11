@@ -34,7 +34,7 @@ metadata:
 - Check operational onboarding: reproducible build instructions, local development setup, and dependency prerequisites.
 
 ### 4. Release governance, artifacts & CI/CD pipelines
-- Verify the presence and completeness of standard repository and release files: `LICENSE`, `CHANGELOG.md` (with unreleased changes cataloged), `CONTRIBUTING.md`, `.gitignore`, `.gitattributes`, and the standard `## 🤖 AI Disclosure` footer in root `README.md`.
+- Verify the presence and completeness of standard repository and release files: `LICENSE`, `CHANGELOG.md` (with unreleased changes cataloged), `CONTRIBUTING.md` (when applicable), `.gitignore`, `.gitattributes`, and (if used by the repository) the `## 🤖 AI Disclosure` footer in root `README.md`.
 - Audit CI/CD and release workflows (`.github/workflows/ci.yml`, `release.yml`, package manager publishers): automated test/lint gates, cross-platform artifact compilation, checksum generation, and badge/telemetry accuracy.
 - Identify gaps in structured logging, diagnostic output (`stderr` prefixes/hints), or observability needed for production troubleshooting.
 

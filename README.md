@@ -1,8 +1,36 @@
 # agy-standards
 
-A [Google Antigravity](https://antigravity.google) (`agy`) plugin bundling engineering rules, spec-driven lifecycle skills, and stack-specific standards.
+An opinionated [Google Antigravity](https://antigravity.google) (`agy`) plugin that turns `agy` from an ad-hoc conversational coding assistant into a deterministic, spec-driven software engineering workflow.
 
-Packaged for native integration across Antigravity (`agy`), with skills authored to the open [Agent Skills](https://agentskills.io/home) specification.
+---
+
+## Why `agy-standards`? (Philosophy & workflow)
+
+Ad-hoc AI prompting ("vibe coding") scales poorly once a codebase grows beyond a single file: requirements stay implicit in chat history, edge cases are missed, documentation drifts behind code, and shell/Git commands trigger constant permission prompts.
+
+`agy-standards` enforces a **3-layer engineering architecture** inside Antigravity:
+
+1. **Always-on guardrails (`rules/`)**: Loaded automatically on every turn—enforcing spec-first discipline ([`spec-driven.md`](rules/spec-driven.md)), trunk-based Git and Conventional Commit hygiene ([`git.md`](rules/git.md)), and zero-prompt prefix-allowlist compliance with explicit confirmation gates before mutating files or Git state ([`GEMINI.md`](rules/GEMINI.md)).
+2. **Progressive lifecycle skills (`skills/`)**: Invoked on demand via `/00`–`/07` slash commands so only the active stage's instructions consume context.
+3. **Deterministic stack standards (`standards/` + `fragments/stack-routing.md`)**: Automatically inspects `CWD` build markers (`go.mod`, `pom.xml`, `CMakeLists.txt`, `*.sh`) and loads the matching language idioms, static analyzers, and test runners.
+
+```mermaid
+flowchart LR
+    Issue["0. /00-issue-generation<br/>(.issue-draft.md)"]
+    Spec["1. /01-spec-generation<br/>(docs/spec/)"]
+    Code["2. /02-implementation<br/>(Code + Tests + Spec Sync)"]
+    Docs["3. /03-docs-review<br/>(Tone & Accuracy)"]
+    Audit["4. /04-pre-release-audit<br/>(Read-Only GO/NO-GO)"]
+    Release["5. /05-release<br/>(SemVer + Changelog + Tag)"]
+
+    Issue -->|"Track A: Everyday feat/fix"| Code
+    Issue -->|"Track B: Greenfield / Major arch"| Spec
+    Spec --> Code
+    Code --> Docs --> Audit --> Release
+```
+
+- **Track A (Everyday features & bug fixes)**: Draft a strict Git issue (`/00-issue-generation`) $\rightarrow$ implement with TDD and inline living-spec sync (`/02-implementation`).
+- **Track B (Greenfield projects, legacy rewrites & major subsystems)**: Author or update system/module specifications in `docs/spec/` (`/01-spec-generation`) $\rightarrow$ implement against the spec (`/02-implementation`).
 
 ---
 

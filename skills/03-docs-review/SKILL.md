@@ -44,7 +44,7 @@ metadata:
 - **Preserve technical precision:** Do not alter code blocks, CLI flags, configuration keys, exit codes, or exact technical meanings while simplifying surrounding prose.
 - **Spec & codebase cross-check:** Flag any documented command syntax, flag default, config key, or example output that contradicts `docs/spec/` or the implementation.
 - **Link & formatting hygiene:** Verify internal Markdown links resolve on disk, heading hierarchy is consistent, and code blocks carry valid language tags (`bash`, `yaml`, `go`, `text`).
-- **Root `README.md` AI disclosure footer:** Verify that the repository's root `README.md` ends with the standard AI disclosure section (and append it if missing):
+- **Root `README.md` AI disclosure footer (conditional):** If the repository uses an `## 🤖 AI Disclosure` footer (or if requested by the user), verify that root `README.md` ends with the standard section:
   ```markdown
   ---
 
