@@ -1,8 +1,10 @@
 # Engineering philosophy: Why this workflow exists
 
+This document is for people deciding whether `agy-standards` fits how they work, or trying to understand why it behaves the way it does. It isn't loaded into the agent's context.
+
 ## The shift: Where did the thinking time go?
 
-Before AI coding agents, writing syntax took most of the time. Typing out structs, error handling, and boilerplate took hours—and **during those hours, design happened in the background**. While writing code line by line, your mind naturally turned the problem over and caught edge cases along the way:
+Before AI coding agents, writing syntax took most of the time. Typing out structs, error handling, and boilerplate took hours—and **during those hours, design happened in the background**. While writing code line by line, your mind turned the problem over and caught edge cases along the way:
 - *"What if this file is a broken symlink?"*
 - *"What if the user is offline?"*
 - *"What exit code should this return?"*
@@ -13,17 +15,50 @@ An LLM is like a very fast, very literal developer who cannot read your mind. If
 
 ---
 
-## Takeaways
+## What this plugin is
 
-### 1. This workflow is a pacing mechanism, not bureaucracy
-`agy-standards` and `git-brx` exist to put a deliberate pause for human engineering judgment right before the AI hits the gas pedal:
-- **`docs/spec/` (The living contract)**: Defines what the system *is*—interfaces, flags, exit codes, and invariants. Without a spec, an agent reading existing code cannot tell the difference between an intended invariant and an accidental bug.
-- **Issues (The bounded delta)**: Defines what changes next, which edge cases matter, and how to verify it.
-- **`git-brx` (The mechanical rails)**: Automates branch creation, syncing, and PR hygiene so the discipline costs almost zero keystrokes.
+`agy-standards` is a **pacing mechanism, not bureaucracy**. It puts a deliberate pause for human judgment right before the agent starts generating code, and keeps the mechanical parts (branching, syncing, PR hygiene) out of the way.
 
-### 2. How to keep specs from feeling too verbose
-Specs become a chore when they turn into walls of AI-generated prose or try to describe internal helper functions in English.
-- **Don't write the spec alone—use `--mode plan` as an interview**: Give a rough 2-sentence idea and ask `agy` to challenge the edge cases and trade-offs. Answering 4 sharp questions triggers the same design discovery that used to happen while coding by hand. Let `/00-spec` or `/01-issue` draft the Markdown from your answers.
-- **Prefer tables and invariants over paragraphs**: Document boundaries (CLI flags, state transitions, error matrices, and *"Always/Never"* invariants). Leave internal line-by-line logic to the code.
-- **Spike when you don't know the design yet**: Sometimes you can't know the right design in words until you see a rough prototype. Spin up a `<type>/<slug>` branch, let the AI prototype it, see what works, and then lock the real design into `docs/spec/`.
-- **Skip the ceremony for trivial fixes**: A 2-line bug fix, doc tweak, or dependency bump doesn't need an issue draft—use the fast-path and ship it.
+The workflow rests on the two artifacts described in the [README](../README.md#approach): specs and issues. Specs matter more with an agent than with a human teammate, because an agent reading existing code can't tell an intended invariant from an accidental bug. Only the spec can tell it which is which.
+
+## Who decides what
+
+The split is intentional: you own intent and irreversible actions, the agent owns the labor.
+
+| You decide | The agent does |
+| :--- | :--- |
+| What the system should do (`docs/spec/`) | Interviews you about edge cases and drafts the spec |
+| What changes next and what "done" means (issue, acceptance criteria) | Drafts the issue from your answers |
+| Whether a change ships | Writes code and tests, runs linters, audits spec ↔ code ↔ docs drift |
+| Every commit, push, tag, and deletion | Proposes the exact commands and waits for confirmation |
+
+If the agent hits a design question the spec doesn't answer, the intended behavior is to stop and ask, not to guess.
+
+## How it's built, and why
+
+| Layer | Loaded | Purpose | Why it's separate |
+| :--- | :--- | :--- | :--- |
+| **Rules** (`rules/`) | Always | Workflow, Git conventions, tool and approval policy | Kept small because they cost context on every turn |
+| **Skills** (`skills/`) | When invoked (`/00-spec` … `/07-models`) | One lifecycle step each | Each step runs in its own session with its own effort level |
+| **Standards** (`standards/`) | When a stack marker matches (`go.mod`, `pom.xml`, …) | Language-specific idioms and verification commands | A Go project doesn't need Java rules in context |
+| **Fragments** (`fragments/`) | Referenced by skills | Shared constraints such as tone | Written once, reused everywhere |
+
+[`git-brx`](https://github.com/bvarnai/git-brx) is a separate, optional companion for your side of the workflow. It turns the Git conventions into concrete commands, so you don't have to speak fluent Git. Without it, the agent runs plain `git` following the same rules.
+
+## Write it down first
+
+This is an old habit, not a new process: before writing code, take a sheet of A4 paper and write down what the code should do—the inputs, the outputs, and what happens when things go wrong. It isn't about being slow or cautious. Writing it down is how you find out whether you actually understand the problem.
+
+With an agent, that sheet matters more than ever, because it's the only place the design thinking still happens before the code appears. `docs/spec/` is the same sheet, kept in the repository so it outlives the session.
+
+Keep it in the A4 spirit: boundaries, not internals. Flags, state transitions, error matrices, and *"always/never"* invariants, preferably as tables. Line-by-line logic belongs in the code. If a spec has grown into pages of prose, it has stopped being the sheet of paper.
+
+Not every change needs one. A 2-line fix, a doc tweak, or a dependency bump goes straight to implementation without an issue.
+
+## When it's not a good fit
+
+- Throwaway scripts and one-off experiments, where there's no future reader to protect.
+- Early exploration, when you can't describe the design yet. Build a rough, throwaway prototype first, then write down what you learned.
+- Repositories without automated tests. The workflow treats passing tests as the definition of done, so without them it loses its main check.
+
+For how to run the workflow day to day, see [Working effectively](../README.md#working-effectively).

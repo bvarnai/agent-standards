@@ -6,14 +6,14 @@
 
 ## Approach
 
-`agy-standards` helps structure development with `agy` around a simple habit: **write down and agree on what you want to build before writing code.**
+`agy-standards` structures development with `agy` around one habit: **agree on what you want to build and put it in writing before any code exists.**
 
-Instead of relying on long chat histories where requirements get lost, the workflow relies on two things:
+That written record replaces long chat histories, where requirements get lost, and takes two forms:
 
 - **Specifications (`docs/spec/`)**: Living requirements and design documents that describe how the project works (CLI flags, APIs, configuration, and behavior).
 - **Issues**: Small, well-defined tasks that describe what needs to change, the edge cases to handle, and how to test it.
 
-Because the requirements and design are written down up front, each coding or review step can run in a fresh session with clear boundaries. *(See [docs/philosophy.md](docs/philosophy.md) for background notes on why this workflow is structured this way.)*
+Each coding or review step can then start in a fresh session and read what it needs from these files. *(See [docs/philosophy.md](docs/philosophy.md) for why the workflow is built this way.)*
 
 ---
 
@@ -40,17 +40,20 @@ flowchart LR
 2. **Daily development loop (`Plan` $\rightarrow$ `/01-issue` $\rightarrow$ `/02-implement`)**:
    - **Plan (`--mode plan` / `/plan`)**: Discuss the problem and agree on the approach before touching code.
    - **Create issue (`/01-issue`)**: Turn the agreed plan into a structured issue draft (`.issue-draft.md`) with acceptance criteria, edge cases, and test cases.
-   - **Implement (`/02-implement`)**: Create the branch (`git brx create issue/<id> -y`), update `docs/spec/` and the code together, run tests/linters, and open a PR (`git brx publish` $\rightarrow$ `git brx review`).
+   - **Implement (`/02-implement`)**: Create a topic branch, update `docs/spec/` and the code together, run tests and linters, and open a PR.
 3. **Release pipeline (`/03-docs` $\rightarrow$ `/04-audit` $\rightarrow$ `/05-release`)**: When ready to release, review user docs, run a read-only audit across specs, code, and tests, and cut the release tag.
 
-### Companion tool: [`git-brx`](https://github.com/bvarnai/git-brx) (optional, recommended)
+### Companion tool: [`git-brx`](https://github.com/bvarnai/git-brx) (optional)
 
-`agy-standards` and [`git-brx`](https://github.com/bvarnai/git-brx) are designed as two halves of the same engineering workflow:
+`agy-standards` shapes how the agent plans, writes specs, codes, and audits. `git-brx` serves a different purpose in the same workflow: it covers your side of it. It turns the branching conventions in [`rules/git.md`](rules/git.md) into concrete commands (`git brx create`, `sync`, `publish`, `review`, and so on) on top of Git, so you can follow the workflow without being fluent in Git.
 
-- **`agy-standards`** is the **cognitive & specification layer** (how `agy` plans, drafts issues, writes specs, codes, tests, and audits).
-- **`git-brx`** is the **mechanical Git & tracker execution engine** (`git brx create`, `sync`, `update`, `resolve`, `publish`, `review`, `delete`).
+If `git-brx` is on `PATH`, the agent uses it too. If not, the agent runs the equivalent plain `git` commands, and the workflow stays the same.
 
-`git-brx` is **recommended but not mandatory**: when `git-brx` is installed on `PATH`, [`rules/git.md`](rules/git.md) and `/02-implement` use it automatically for branch creation, linear rebase syncing, and PR submission; when it is not installed, `agy` falls back to standard `git` commands following the same trunk-based conventions.
+### Working effectively
+
+- **Use plan mode as an interview.** Give a rough 2-sentence idea and ask `agy` to challenge the edge cases and trade-offs. Answering a few sharp questions triggers the same design thinking that used to happen while coding by hand. Then let `/00-spec` or `/01-issue` draft the Markdown from your answers.
+- **Prototype when the design isn't clear yet.** Build a rough, throwaway version to learn what works, then write the real design into `docs/spec/`.
+- **Use the fast path for trivial changes.** Small fixes, doc edits, and dependency bumps don't need an issue.
 
 ---
 
