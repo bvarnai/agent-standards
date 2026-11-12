@@ -8,7 +8,10 @@ bats_load_library bats-assert
 REPO_ROOT="$(cd -- "${BATS_TEST_DIRNAME}/../.." && pwd)"
 export REPO_ROOT
 
-# Antigravity caps each rule file at 24,000 bytes after @-import expansion.
+# Antigravity truncates each rule file at 24,000 bytes after expanding
+# @[label](path) imports. Source: https://antigravity.google/docs/rules-workflows
+# ("Size limits and context budget"; also in agy's built-in
+# agy-customizations/docs/rules.md).
 RULE_BYTE_LIMIT=24000
 export RULE_BYTE_LIMIT
 
