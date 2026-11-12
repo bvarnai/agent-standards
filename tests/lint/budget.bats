@@ -1,6 +1,11 @@
 #!/usr/bin/env bats
 # Static check: always-on rules stay within the Antigravity rule size cap.
 
+# Antigravity truncates each rule file at 24,000 bytes after expanding
+# @[label](path) imports. Source: https://antigravity.google/docs/rules-workflows
+# ("Size limits and token budgets").
+readonly RULE_BYTE_LIMIT=24000
+
 setup() {
   load helpers
   RULE="${BATS_TEST_TMPDIR}/GEMINI.md"
