@@ -5,7 +5,7 @@ These standards apply to Go CLI applications and services whenever `go.mod` is p
 ## Architectural principles
 1. **Entry point separation**:
    - `main.go` / `cmd/<tool>/main.go` must remain minimal: parse environment/flags, call an `app.Run(ctx, args, stdout, stderr)` function, and call `os.Exit(code)`.
-   - Keep business logic in `internal/` to avoid polluting the public module API unless package reusability is explicitly required.
+   - Keep business logic in `internal/` to avoid polluting the public module API unless package reusability is explicitly required, and enforce inward dependency direction (`domain` / `errcode` <- infrastructure packages <- `internal/cli`).
 2. **Standard I/O streams**:
    - Always accept `io.Writer` for `stdout` and `stderr` rather than writing directly to `os.Stdout` / `os.Stderr` to make commands easily testable.
    - Structured output (JSON, YAML) and standard logs must not mix on `stdout`; write diagnostic logs to `stderr`.
@@ -17,15 +17,16 @@ These standards apply to Go CLI applications and services whenever `go.mod` is p
    - Wrap errors with contextual verbs using `fmt.Errorf("reading config %s: %w", path, err)`.
    - Inspect sentinel and structured errors using `errors.Is` and `errors.As` rather than string matching or direct equality (`==`).
    - Never discard errors (`_ = ...`) without an explicit inline comment explaining why it is safe.
-2. **Context propagation & signal handling**:
+2. **Context propagation, subprocesses & signal handling**:
    - Accept `context.Context` as the first argument in all network, filesystem, subprocess (`exec.CommandContext`), or long-running operations.
+   - Execute subprocesses directly via `exec.CommandContext` without an intermediate shell, and pass `--` before positional refs or file paths to prevent leading-dash option injection.
    - Wire `signal.NotifyContext(ctx, os.Interrupt, syscall.SIGTERM)` at the CLI root and respect context cancellation in loops and goroutines (`select { case <-ctx.Done(): return ctx.Err() ... }`).
 
 ## Exit codes & POSIX conventions
-- `0`: Success.
-- `1`: General application / runtime error.
-- `2`: Command line usage / flag syntax error.
-- `130`: Process interrupted (`SIGINT` / `SIGTERM` context cancellation).
+- `0` (`nil`): Success.
+- `1` (`ErrRuntime`): General application / runtime error.
+- `2` (`ErrUsage`): Command line usage / flag syntax error.
+- `130` (`ErrInterrupted`): Process interrupted (`SIGINT` / `SIGTERM` context cancellation).
 
 ## Verification & testing standards
 1. **Table-driven tests**:

@@ -25,12 +25,12 @@ Omit any optional section whose `Include when:` condition does not apply—never
 
 ### 2. Exit code matrix
 
-| Exit code | Error category / sentinel | Semantic meaning | Common triggers |
+| Exit code | Error category | Semantic meaning | Common triggers |
 | :--- | :--- | :--- | :--- |
-| `0` | `nil` | Success | Command completed cleanly. |
-| `1` | `ErrRuntime` | General runtime error | Unhandled execution or I/O error. |
-| `2` | `ErrUsage` | CLI usage / syntax error | Unknown flag, wrong argument count, mutual exclusion. |
-| `130` | `ErrInterrupted` | Process interrupted | `SIGINT` or `SIGTERM` cancellation. |
+| `0` | `—` | Success | Command completed cleanly. |
+| `1` | `Runtime error` | General runtime error | Unhandled execution or I/O error. |
+| `2` | `Usage error` | CLI usage / syntax error | Unknown flag, wrong argument count, mutual exclusion. |
+| `130` | `Interrupted` | Process interrupted | `SIGINT` or `SIGTERM` cancellation. |
 
 ### 3. Invariants
 State **Always** / **Never** architectural and safety rules (e.g., *Always validate inputs before mutating state; never write partial config files*).
@@ -44,9 +44,9 @@ State **Always** / **Never** architectural and safety rules (e.g., *Always valid
 
 ### Subcommand registry
 *Include when:* the tool has multiple subcommands.
-| Subcommand | Target package | Spec file | Core responsibility |
+| Subcommand | Target module / package | Spec file | Core responsibility |
 | :--- | :--- | :--- | :--- |
-| `<name>` | `internal/cli` | `<name>.md` | Concise summary of subcommand responsibility. |
+| `<name>` | `<module/subcommand>` | `<name>.md` | Concise summary of subcommand responsibility. |
 
 ### Environment variables
 *Include when:* the tool reads or injects environment variables.
@@ -61,8 +61,8 @@ State **Always** / **Never** architectural and safety rules (e.g., *Always valid
 
 ### Subprocess safety & signal handling
 *Include when:* the tool spawns external commands or traps `SIGINT`/`SIGTERM`.
-- **Subprocess invocation:** direct execution without a shell (`exec.CommandContext`), deterministic plumbing with NUL (`-z` / `%x00`) delimiters, `LC_ALL=C`, and `--` before positional refs/paths.
-- **Signal & cleanup:** `SIGINT`/`SIGTERM` trapping (`signal.NotifyContext` or `trap`), child grace period, lockfile release, and rollback of partial state.
+- **Subprocess invocation:** direct execution without an intermediate shell, deterministic plumbing with NUL (`-z` / `%x00`) delimiters, `LC_ALL=C`, and `--` before positional refs/paths.
+- **Signal & cleanup:** `SIGINT`/`SIGTERM` trapping, child grace period, lockfile release, and rollback of partial state.
 
 ### TTY, color & output streams
 *Include when:* machine-parseable `stdout` vs. `stderr` diagnostics or color/TTY detection matters.
@@ -73,7 +73,7 @@ State **Always** / **Never** architectural and safety rules (e.g., *Always valid
 ### Persistent storage & package layout
 *Include when:* the tool writes state/metadata files or needs explicit dependency boundaries.
 - **Storage & permissions:** file formats, atomic write/rename guarantees, and permissions (`0600`/`0755`).
-- **Package layout & dependency direction:** e.g., `cmd/<binary>/main.go`, `internal/...` (`domain`/`errcode` <- infrastructure <- `cli`).
+- **Package layout & dependency direction:** entrypoint and module boundaries (`domain`/core <- infrastructure <- CLI layer).
 
 ### Legacy discrepancies & modernization decisions
 *Include when:* reverse-engineering `/legacy` or reference code.
@@ -107,7 +107,7 @@ Keep subcommand specs concise (~40–80 lines). Reference `docs/spec/global.md` 
 ## 4. Error handling & exit codes
 | Exit code | Error category | Scenario | Emitted `stderr` pattern | Cleanup / side effects |
 | :--- | :--- | :--- | :--- | :--- |
-| `0` | `nil` | Success | ... | None. |
+| `0` | `—` | Success | ... | None. |
 | `...` | `...` | ... | `[<bin>] Error: ...` | ... |
 
 ## 5. Edge cases & behavioral notes
