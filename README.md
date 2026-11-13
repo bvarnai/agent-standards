@@ -91,7 +91,7 @@ Run these skills inside an interactive `agy` session, or invoke supported stages
 | **1. Issue** | `/01-issue` | `medium` | `agy --effort medium -p "/01-issue feat: add foo"` | Draft strict, spec-driven issues. |
 | **2. Implement** | `/02-implement` | `medium` | — | Implement features/fixes with spec sync & tests. |
 | **3. Docs** | `/03-docs` | `medium` | `agy --effort medium -p "/03-docs"` | Audit docs for tone and factual accuracy. |
-| **4. Audit** | `/04-audit` | `high` | `agy --effort high -p "/04-audit"` | Read-only pre-release readiness audit. |
+| **4. Audit** | `/04-audit` | `low` | `agy --effort low -p "/04-audit"` | Read-only pre-release readiness checklist. |
 | **5. Release** | `/05-release` | `low` | — | Prepare changelog/manifests and tag default branch. |
 
 ### Occasional & maintenance tasks
@@ -106,9 +106,9 @@ Start your `agy` session in **Build** (`medium`) as the default, then shift up t
 
 | Gear | When to use | Stages | Model profile | Effort & mode |
 | :--- | :--- | :--- | :--- | :--- |
-| **1. Think** | Designing architecture, catching subtle drift, or stuck on a hard bug | `00-spec`, `06-harmonize`, `04-audit` | Strongest reasoning model | `high` *(+ `plan` for `00-spec` / `06-harmonize`)* |
+| **1. Think** | Designing architecture, catching subtle drift, or stuck on a hard bug | `00-spec`, `06-harmonize` | Strongest reasoning model | `high` *(+ `plan` for `00-spec` / `06-harmonize`)* |
 | **2. Build** *(default)* | Day-to-day coding, tests, issue drafting, and doc reviews | `01-issue`, `02-implement`, `03-docs` | Fast, surgical coding model | `medium` |
-| **3. Mechanical** | Deterministic steps where deep reasoning adds latency, not value | `05-release`, trivial `chore:` / `docs:` | Fastest available (or same model) | `low` |
+| **3. Mechanical** | Deterministic checklists and release steps where deep reasoning adds latency | `04-audit`, `05-release`, trivial `chore:` / `docs:` | Fastest available (or same model) | `low` |
 
 For concrete model picks and per-stage rationale, see [docs/models.md](./docs/models.md).
 
