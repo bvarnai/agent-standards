@@ -1,22 +1,19 @@
 ---
 name: 04-audit
-description: Execute a strict, read-only readiness audit across code, specifications, user documentation, test suites, and CI/release pipelines (or scoped to a branch/PR diff) to identify P0 blockers and technical debt. Activate before tagging a release, reviewing a branch, or running /04-audit.
+description: Execute a read-only pre-release readiness audit across code, specifications, user documentation, test suites, and CI/release pipelines to identify P0 blockers before tagging. Activate before running /05-release or /04-audit.
 metadata:
   lifecycle_stage: "04-audit"
   mode: "interactive | one-shot"
   recommended_flags: "--effort high"
 ---
 
-# 04 — Pre-release & branch audit
+# 04 — Pre-release audit
 
 ## Constraints & role
 - **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 - **Permission:** None (read-only).
 1. **Read-only boundary**: Perform inspection, static analysis, and test execution only. Do not mutate git state, create tags, or edit files.
 2. **Signal over noise**: Report only concrete findings, drift, and actionable fixes—do not summarize what is already working well.
-3. **Audit mode selection**:
-   - **Full release audit (default)**: When invoked with no scope arguments, audit the entire repository across all four sections below for release readiness.
-   - **Branch / PR diff audit (when passed a ref, range, or issue `#id`)**: Scope inspection to the changed files (`git diff main...HEAD`), verifying Acceptance Criteria test coverage, `docs/spec/` synchronization, stack rule compliance, and full test/linter execution.
 
 ## Audit scope & evaluation criteria
 
