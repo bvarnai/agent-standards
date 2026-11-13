@@ -144,3 +144,32 @@ check_rule_budget() {
   echo "${file##*/}: ${size} bytes after import expansion (limit ${limit})"
   [[ "${size}" -le "${limit}" ]]
 }
+
+# check_no_issue_scoped_commits <path>...
+# Fails if any commit template uses an issue number as its scope
+# (git commit -m "feat(#42): ..."). Issue references belong to the merge
+# commit, which git-brx writes.
+check_no_issue_scoped_commits() {
+  local matches
+
+  matches="$(grep -rnE 'git commit .*-m "[a-z]+\(#' "$@" || true)"
+  if [[ -n "${matches}" ]]; then
+    echo "commit template with an issue-number scope:" >&2
+    echo "${matches}" >&2
+    return 1
+  fi
+}
+
+# check_no_gh_calls <path>...
+# Fails if any file calls the GitHub CLI (gh <subcommand>). Words that merely
+# contain "gh" (high, through) don't match.
+check_no_gh_calls() {
+  local matches
+
+  matches="$(grep -rnE '(^|[^[:alnum:]_-])gh [a-z]+' "$@" || true)"
+  if [[ -n "${matches}" ]]; then
+    echo "GitHub CLI call (keep the plugin platform-neutral):" >&2
+    echo "${matches}" >&2
+    return 1
+  fi
+}
