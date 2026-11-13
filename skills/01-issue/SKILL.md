@@ -10,7 +10,7 @@ metadata:
 # 01 — Issue drafting
 
 ## Constraints
-- Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
+- **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 - **Permission:** Create or overwrite `.issue-draft.md` in CWD.
 - **Root-cause triage for `fix:` issues**: When drafting a bug/regression issue (`fix:`), inspect the relevant source files first to identify the concrete root cause, reproduction conditions, and whether `docs/spec/` requires an edge-case or error-matrix update.
 - **Proportionality**: Scale depth to complexity. For trivial `chore:` or `docs:` issues, keep design bullets minimal and explicitly mark `Edge cases & failure modes` as `None (trivial change)` rather than inventing filler.
@@ -22,9 +22,9 @@ metadata:
    - The issue title in commit convention format: `<type>(<component>): <title>`.
    - A clickable link to `.issue-draft.md`. The user creates the ticket from it in their own tracker.
 
-## Mandatory issue layout template
+## Issue layout template
 
-Format the issue strictly using the template below in GitHub Flavored Markdown:
+Format the issue using the template below in GitHub Flavored Markdown:
 
 ```markdown
 ### [Type]: Short title (matching Git conventions)

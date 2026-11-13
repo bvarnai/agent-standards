@@ -10,10 +10,10 @@ metadata:
 # 05 — Release
 
 ## Constraints & execution scope
+- **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 - **Permission:** Edit `CHANGELOG.md` and version strings in build manifests in CWD.
-1. **No re-auditing**: Assume `/04-audit` is complete and all `P0` blockers are resolved. Do **not** re-audit documentation, CI workflows, governance files, or code quality.
-2. **Tone**: Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
-3. **Verification gate**: Never commit on or push the default branch. Never execute `git commit`, `git tag`, or `git push` without explicit user confirmation.
+1. **No re-auditing**: Assume `/04-audit` is complete and all `P0` blockers are resolved. Do not re-audit documentation, CI workflows, governance files, or code quality.
+2. **Verification gate**: Never commit on or push the default branch. Never execute `git commit`, `git tag`, or `git push` without explicit user confirmation.
 
 ## Execution steps
 

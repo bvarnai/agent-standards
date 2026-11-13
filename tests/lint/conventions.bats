@@ -50,3 +50,18 @@ setup() {
   run check_no_gh_calls "${DOC}"
   assert_success
 }
+
+@test "every skill uses the canonical tone fragment reference" {
+  local skill
+  for skill in "${REPO_ROOT}"/skills/*/SKILL.md; do
+    run check_tone_reference "${skill}"
+    assert_success
+  done
+}
+
+@test "tone reference check fails on a non-canonical reference" {
+  printf '%s\n' '- Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).' >"${DOC}"
+  run check_tone_reference "${DOC}"
+  assert_failure
+  assert_output --partial "missing canonical tone reference"
+}

@@ -10,10 +10,10 @@ metadata:
 # 07 — Model & effort compass review
 
 ## Constraints & role
+- **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 - **Permission:** None. Propose the README table and apply it after confirmation.
-1. **Tone**: Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
-2. **Evidence-based evaluation**: Evaluate models strictly on practical engineering execution—surgical code-edit precision, multi-step tool-loop speed, instruction adherence, and multi-file architectural synthesis—rather than marketing claims.
-3. **Scope**: Keep `skills/*/SKILL.md` frontmatter model-agnostic (`--effort` and `--mode` only); record concrete model name recommendations exclusively in the **Model & effort mental compass** table in [README.md](../../README.md).
+1. **Evidence-based evaluation**: Evaluate models on practical engineering execution—surgical code-edit precision, multi-step tool-loop speed, instruction adherence, and multi-file architectural synthesis—rather than marketing claims.
+2. **Scope**: Keep `skills/*/SKILL.md` frontmatter model-agnostic (`--effort` and `--mode` only); record concrete model name recommendations exclusively in the **Model & effort mental compass** table in [README.md](../../README.md).
 
 ## Discovery & evaluation procedure
 

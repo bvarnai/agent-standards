@@ -10,7 +10,7 @@ metadata:
 # 00 — Technical specification authoring
 
 ## Constraints
-- Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
+- **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 - **Permission:** Create and edit files under `docs/spec/` in CWD.
 
 ## Domain template routing
