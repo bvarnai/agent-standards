@@ -10,6 +10,7 @@ metadata:
 # 04 — Pre-release & branch audit
 
 ## Constraints & role
+- **Permission:** None (read-only).
 1. **Strictly read-only**: Perform inspection, static analysis, and test execution only. Do not mutate git state, create tags, or edit files during this phase.
 2. **Tone & signal**: Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md). **Do not summarize what is already working well**—report only concrete findings, drift, and actionable fixes.
 3. **Audit mode selection**:

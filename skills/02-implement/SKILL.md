@@ -11,6 +11,7 @@ metadata:
 
 ## Constraints
 - Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
+- **Permission:** Create and edit source, test, `docs/spec/`, and user documentation files in CWD that the issue or spec requires.
 
 ## Input contract
 1. **Source of truth**:

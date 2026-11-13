@@ -10,6 +10,7 @@ metadata:
 # 03 — Documentation review
 
 ## Constraints & voice separation
+- **Permission:** None. Propose edits and apply each file only after confirmation.
 - **Agent chat response:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md) for your audit commentary (no chat pleasantries or filler).
 - **Documentation prose voice:** Optimize the documentation itself for a **pragmatic, peer-to-peer developer voice**—preserve natural explanatory flow, architectural context ("why" before "how"), and human readability rather than flattening user guides into dry specification telegraphese.
 
