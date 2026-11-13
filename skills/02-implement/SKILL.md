@@ -44,9 +44,8 @@ Upon passing verification, output:
    | Acceptance criterion / edge case | Status | Verifying test / file |
    | :--- | :--- | :--- |
    | ... | Pass | `path/to/test_file:TestName` |
-2. **Proposed commit** (format from [`rules/git.md`](../../rules/git.md); never stage `.issue-draft.md`; wait for user confirmation before executing mutating Git commands):
+2. **Proposed commit** (format from [`rules/git.md`](../../rules/git.md); keep `.issue-draft.md` untracked as the local work-unit spec—update it if scope changes mid-flight so the remote issue can be synced, and remove it only after the PR merges; wait for user confirmation before executing mutating Git commands):
    ```bash
-   rm -f .issue-draft.md
    git add <modified-files>
    git commit -m "<type>(<component>): <concise summary>"
    ```
