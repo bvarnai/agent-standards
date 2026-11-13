@@ -21,29 +21,24 @@ An LLM is like a very fast, very literal developer who cannot read your mind. If
 
 The workflow rests on the two artifacts described in the [README](../README.md#approach): specs and issues. Specs matter more with an agent than with a human teammate, because an agent reading existing code can't tell an intended invariant from an accidental bug. Only the spec can tell it which is which.
 
-## Who decides what
+## Where judgment stays
 
-The split is intentional: you own intent and irreversible actions, the agent owns the labor.
+Intent and anything irreversible stay with people, and the labor moves to the agent. The spec says what the system should do; the agent's part is to ask about edge cases and draft it. An issue says what changes next and what "done" means; the agent drafts it from the answers. Code, tests, linting, and drift audits are the agent's work, but whether a change ships is a human call. Every commit, push, tag, and deletion arrives as an exact command and waits for confirmation.
 
-| You decide | The agent does |
-| :--- | :--- |
-| What the system should do (`docs/spec/`) | Interviews you about edge cases and drafts the spec |
-| What changes next and what "done" means (issue, acceptance criteria) | Drafts the issue from your answers |
-| Whether a change ships | Writes code and tests, runs linters, audits spec ↔ code ↔ docs drift |
-| Every commit, push, tag, and deletion | Proposes the exact commands and waits for confirmation |
-
-If the agent hits a design question the spec doesn't answer, the intended behavior is to stop and ask, not to guess.
+When the spec doesn't answer a design question, the intended behavior is to stop and ask, not to guess.
 
 ## How it's built, and why
 
 | Layer | Loaded | Purpose | Why it's separate |
 | :--- | :--- | :--- | :--- |
-| **Rules** (`rules/`) | Always | Workflow, Git conventions, tool and approval policy | Kept small because they cost context on every turn |
+| **Rules** (`rules/`) | Always | Workflow, commit conventions, tool and approval policy | Kept small because they cost context on every turn |
 | **Skills** (`skills/`) | When invoked (`/00-spec` … `/07-models`) | One lifecycle step each | Each step runs in its own session with its own effort level |
 | **Standards** (`standards/`) | When a stack marker matches (`go.mod`, `pom.xml`, …) | Language-specific idioms and verification commands | A Go project doesn't need Java rules in context |
 | **Fragments** (`fragments/`) | Referenced by skills | Shared constraints such as tone | Written once, reused everywhere |
 
-[`git-brx`](https://github.com/bvarnai/git-brx) is a separate, optional companion for your side of the workflow. It turns the Git conventions into concrete commands, so you don't have to speak fluent Git. Without it, the agent runs plain `git` following the same rules.
+[`git-brx`](https://github.com/bvarnai/git-brx) is a separate, optional companion for your side of the workflow. It brings its own branching conventions and turns them into concrete commands, so you don't have to speak fluent Git. Without it, the agent follows the project's own conventions.
+
+Commits and branches are separate concerns. A commit records one piece of work, and it's usually written by the agent. A branch collects those pieces and decides how they're synced and merged. Which branch a piece of work belongs on is a human call, which is why `git brx create` asks for the branch type explicitly.
 
 ## Write it down first
 
