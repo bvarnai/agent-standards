@@ -10,9 +10,10 @@ metadata:
 # 04 — Pre-release & branch audit
 
 ## Constraints & role
+- **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 - **Permission:** None (read-only).
-1. **Strictly read-only**: Perform inspection, static analysis, and test execution only. Do not mutate git state, create tags, or edit files during this phase.
-2. **Tone & signal**: Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md). **Do not summarize what is already working well**—report only concrete findings, drift, and actionable fixes.
+1. **Read-only boundary**: Perform inspection, static analysis, and test execution only. Do not mutate git state, create tags, or edit files.
+2. **Signal over noise**: Report only concrete findings, drift, and actionable fixes—do not summarize what is already working well.
 3. **Audit mode selection**:
    - **Full release audit (default)**: When invoked with no scope arguments, audit the entire repository across all four sections below for release readiness.
    - **Branch / PR diff audit (when passed a ref, range, or issue `#id`)**: Scope inspection to the changed files (`git diff main...HEAD`), verifying Acceptance Criteria test coverage, `docs/spec/` synchronization, stack rule compliance, and full test/linter execution.

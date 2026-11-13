@@ -10,8 +10,9 @@ metadata:
 # 06 — Cross-project comparison & harmonization
 
 ## Constraints & workspace boundaries
+- **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 - **Permission:** None. Produce a plan and wait for approval.
-1. **Tone & precision**: Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md). Do not emit generic boilerplate; base every finding and action strictly on the concrete delta between the two inspected repositories.
+1. **Evidence-based deltas**: Base every finding and action on the concrete delta between the two inspected repositories.
 2. **Input resolution**:
    - Identify the **Reference repository (`<reference-repo>`)** (the target standard) and the **Target repository (`<target-repo>`)** (the project to be uplifted). If ambiguous, ask the user to confirm which repository is the reference before proceeding.
 3. **Read-only reference boundary**:

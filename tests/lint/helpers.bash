@@ -203,3 +203,15 @@ check_no_default_branch_push() {
     return 1
   fi
 }
+
+# check_tone_reference <skill-file>
+# Fails unless <skill-file> includes the canonical tone fragment reference line.
+check_tone_reference() {
+  local file="$1"
+  local expected='- **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).'
+
+  if ! grep -qxF -- "${expected}" "${file}"; then
+    echo "${file}: missing canonical tone reference '${expected}'" >&2
+    return 1
+  fi
+}

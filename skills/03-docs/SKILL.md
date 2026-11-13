@@ -10,8 +10,8 @@ metadata:
 # 03 — Documentation review
 
 ## Constraints & voice separation
+- **Tone:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
 - **Permission:** None. Propose edits and apply each file only after confirmation.
-- **Agent chat response:** Follow [strict-technical-tone.md](../../fragments/strict-technical-tone.md) for your audit commentary (no chat pleasantries or filler).
 - **Documentation prose voice:** Optimize the documentation itself for a **pragmatic, peer-to-peer developer voice**—preserve natural explanatory flow, architectural context ("why" before "how"), and human readability rather than flattening user guides into dry specification telegraphese.
 
 ## Scope & ground truth separation
@@ -19,7 +19,7 @@ metadata:
    - If specific file paths are passed as arguments, review only those files.
    - Otherwise, inspect `README.md`, `CONTRIBUTING.md`, and user/reference documentation under `docs/` (such as `docs/user-guide/**/*.md`), **excluding** `docs/spec/`.
 2. **Ground truth (read-only reference)**:
-   - Use `docs/spec/` (`global.md` and `<unit>.md`) and the codebase implementation strictly as read-only ground truth to verify technical accuracy. Never rewrite `docs/spec/` during a documentation tone review.
+   - Use `docs/spec/` (`global.md` and `<unit>.md`) and the codebase implementation as read-only ground truth to verify technical accuracy. Never rewrite `docs/spec/` during a documentation tone review.
 
 ## Style, tone & accuracy checklist
 
