@@ -1,7 +1,7 @@
 # Engineering & execution baseline
 
 @[Spec-driven principles](./spec-driven.md)
-@[Git & branching](./git.md)
+@[Commit conventions](./git.md)
 @[Stack routing](./stack-routing.md)
 
 ## Line endings & Markdown formatting
