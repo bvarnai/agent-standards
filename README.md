@@ -81,36 +81,36 @@ agy-standards/
 
 ## Universal lifecycle skills
 
-Run these skills from inside the `agy` TUI or directly from your terminal:
+Run these skills inside an interactive `agy` session, or invoke supported stages headlessly with `agy -p`:
 
 ### Core development & release lifecycle
 
-| Stage | Slash command | CLI interactive (`agy -i`) | CLI headless / audit (`agy -p`) | Purpose |
+| Stage | Slash command | Mode & effort | CLI headless (`agy -p`) | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
-| **0. Spec** | `/00-spec` | `agy --mode plan --effort high -i "/00-spec"` | — | Author or update technical specs in `docs/spec/`. |
-| **1. Issue** | `/01-issue` | `agy --effort medium -i "/01-issue feat: add foo"` | `agy --effort medium -p "/01-issue feat: add foo"` | Draft strict, spec-driven issues. |
-| **2. Implement** | `/02-implement` | `agy --effort medium -i "/02-implement #42"` | — | Implement features/fixes with spec sync & tests. |
-| **3. Docs** | `/03-docs` | `agy --effort medium -i "/03-docs"` | `agy --effort medium -p "/03-docs"` | Audit docs for tone and factual accuracy. |
-| **4. Audit** | `/04-audit` | `agy --effort high -i "/04-audit"` | `agy --effort high -p "/04-audit"` | Read-only pre-release readiness audit. |
-| **5. Release** | `/05-release` | `agy --effort low -i "/05-release v1.2.0"` | — | Finalize changelog, bump version, stage tags. |
+| **0. Spec** | `/00-spec` | `plan`, `high` | — | Author or update technical specs in `docs/spec/`. |
+| **1. Issue** | `/01-issue` | `medium` | `agy --effort medium -p "/01-issue feat: add foo"` | Draft strict, spec-driven issues. |
+| **2. Implement** | `/02-implement` | `medium` | — | Implement features/fixes with spec sync & tests. |
+| **3. Docs** | `/03-docs` | `medium` | `agy --effort medium -p "/03-docs"` | Audit docs for tone and factual accuracy. |
+| **4. Audit** | `/04-audit` | `high` | `agy --effort high -p "/04-audit"` | Read-only pre-release readiness audit. |
+| **5. Release** | `/05-release` | `low` | — | Prepare changelog/manifests and tag default branch. |
 
 ### Occasional & maintenance tasks
 
-| Task | Slash command | CLI interactive (`agy -i`) | Purpose |
+| Task | Slash command | Mode & effort | Purpose |
 | :--- | :--- | :--- | :--- |
-| **6. Harmonize** | `/06-harmonize` | `agy --mode plan --effort high -i "/06-harmonize"` | Compare two repos & plan structural uplift. |
+| **6. Harmonize** | `/06-harmonize` | `plan`, `high` | Compare two repos & plan structural uplift. |
 
 ### Model & effort mental compass
 
-Choose the **model (`--model` / `/model`)** for its base instincts (**Gemini 4 Argon** for deep architectural synthesis vs. **Gemini 3.8** for surgical coding and fast tool loops) and **effort (`--effort`)** for per-turn thinking depth:
+Start your `agy` session in **Build** (`medium`) as the default, then shift up to **Think** or down to **Mechanical** only when the stage calls for it:
 
-| Engineering goal | Lifecycle stages | Recommended model | Effort & mode | Why this combination works best |
+| Gear | When to use | Stages | Model profile | Effort & mode |
 | :--- | :--- | :--- | :--- | :--- |
-| **System architecture, specs & cross-repo uplift** | `00-spec`<br>`06-harmonize` | **Gemini 4 Argon** | `--mode plan --effort high` | Deepest multi-file reasoning, legacy reverse-engineering, and interface/invariant synthesis before writing code. |
-| **Pre-release readiness & cross-artifact audit** | `04-audit` | **Gemini 4 Argon** | `--effort high` | Holds Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI invariants in working memory simultaneously to catch subtle drift without false positives. |
-| **Hands-on coding, TDD & tool execution loops** | `02-implement`<br>`01-issue` | **Gemini 3.8** | `--effort medium`<br>*(or `high` for race/concurrency bugs)* | Stronger coding instincts and surgical diffs; follows existing code style without over-abstraction and iterates faster across 10–20 edit/test steps. |
-| **Documentation tone & accuracy review** | `03-docs` | **Gemini 3.8**<br>*(or **Gemini 4 Argon**)* | `--effort medium` | Verifies flags/examples against code while keeping developer prose direct, natural, and free of stiff AI phrasing. |
-| **Mechanical release cut & changelog bump** | `05-release`<br>*(plus trivial `chore:`/`docs:` issues)* | **Gemini 3.8** *(or **Flash** / **Argon Low**)* | `--effort low` | Purely deterministic execution (SemVer bump, `CHANGELOG.md` move, Git tag staging); `low` prevents re-auditing and minimizes latency. |
+| **1. Think** | Designing architecture, catching subtle drift, or stuck on a hard bug | `00-spec`, `06-harmonize`, `04-audit` | Strongest reasoning model | `high` *(+ `plan` for `00-spec` / `06-harmonize`)* |
+| **2. Build** *(default)* | Day-to-day coding, tests, issue drafting, and doc reviews | `01-issue`, `02-implement`, `03-docs` | Fast, surgical coding model | `medium` |
+| **3. Mechanical** | Deterministic steps where deep reasoning adds latency, not value | `05-release`, trivial `chore:` / `docs:` | Fastest available (or same model) | `low` |
+
+For concrete model picks and per-stage rationale, see [docs/models.md](./docs/models.md).
 
 ---
 
