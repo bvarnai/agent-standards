@@ -45,9 +45,9 @@ flowchart LR
 
 ### Companion tool: [`git-brx`](https://github.com/bvarnai/git-brx) (optional)
 
-`agy-standards` shapes how the agent plans, writes specs, codes, and audits. `git-brx` serves a different purpose in the same workflow: it covers your side of it. It turns the branching conventions in [`rules/git.md`](rules/git.md) into concrete commands (`git brx create`, `sync`, `publish`, `review`, and so on) on top of Git, so you can follow the workflow without being fluent in Git.
+`agy-standards` shapes how the agent plans, writes specs, codes, audits, and writes commits. `git-brx` serves a different purpose in the same workflow: it covers your side of it. It brings its own branching conventions and turns them into concrete commands (`git brx create`, `sync`, `publish`, `review`, and so on) on top of Git, so you can follow the workflow without being fluent in Git. It also ships its own agent skill; see its [AI agent integration guide](https://github.com/bvarnai/git-brx/blob/main/docs/user-guide/getting-started.md).
 
-If `git-brx` is on `PATH`, the agent uses it too. If not, the agent runs the equivalent plain `git` commands, and the workflow stays the same.
+If `git-brx` is on `PATH`, the agent uses it for branches, syncing, and PRs. If not, the agent follows the project's own conventions.
 
 ### Working effectively
 
@@ -65,7 +65,7 @@ agy-standards/
 ├── rules/                              # Universal always-on rules (auto-loaded by plugin)
 │   ├── GEMINI.md                       # Rule entrypoint (@-imports rules below + formatting & tool policy)
 │   ├── spec-driven.md                  # Plan -> Issue -> Spec & Code rules
-│   ├── git.md                          # Trunk-based branching, git-brx / git lifecycle & commit conventions
+│   ├── git.md                          # Commit conventions
 │   └── stack-routing.md                # CWD marker -> domain standard routing table
 ├── standards/                          # Stack-specific standards (routed via rules/stack-routing.md)
 │   ├── go-cli.md                       # Go CLI architecture, error wrapping & testing

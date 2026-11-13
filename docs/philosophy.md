@@ -29,7 +29,7 @@ The split is intentional: you own intent and irreversible actions, the agent own
 | :--- | :--- |
 | What the system should do (`docs/spec/`) | Interviews you about edge cases and drafts the spec |
 | What changes next and what "done" means (issue, acceptance criteria) | Drafts the issue from your answers |
-| Whether a change ships | Writes code and tests, runs linters, audits spec ↔ code ↔ docs drift |
+| Whether a change is ready to ship | Builds it and shows the evidence: passing tests and linters, and any spec ↔ code ↔ docs drift |
 | Every commit, push, tag, and deletion | Proposes the exact commands and waits for confirmation |
 
 If the agent hits a design question the spec doesn't answer, the intended behavior is to stop and ask, not to guess.
@@ -38,12 +38,14 @@ If the agent hits a design question the spec doesn't answer, the intended behavi
 
 | Layer | Loaded | Purpose | Why it's separate |
 | :--- | :--- | :--- | :--- |
-| **Rules** (`rules/`) | Always | Workflow, Git conventions, tool and approval policy | Kept small because they cost context on every turn |
+| **Rules** (`rules/`) | Always | Workflow, commit conventions, tool and approval policy | Kept small because they cost context on every turn |
 | **Skills** (`skills/`) | When invoked (`/00-spec` … `/07-models`) | One lifecycle step each | Each step runs in its own session with its own effort level |
 | **Standards** (`standards/`) | When a stack marker matches (`go.mod`, `pom.xml`, …) | Language-specific idioms and verification commands | A Go project doesn't need Java rules in context |
 | **Fragments** (`fragments/`) | Referenced by skills | Shared constraints such as tone | Written once, reused everywhere |
 
-[`git-brx`](https://github.com/bvarnai/git-brx) is a separate, optional companion for your side of the workflow. It turns the Git conventions into concrete commands, so you don't have to speak fluent Git. Without it, the agent runs plain `git` following the same rules.
+[`git-brx`](https://github.com/bvarnai/git-brx) is a separate, optional companion for your side of the workflow. It brings its own branching conventions and turns them into concrete commands, so you don't have to speak fluent Git. Without it, the agent follows the project's own conventions.
+
+Commits and branches are separate concerns. A commit records one piece of work, and it's usually written by the agent. A branch collects those pieces and decides how they're synced and merged. Which branch a piece of work belongs on is a human call, which is why `git brx create` asks for the branch type explicitly.
 
 ## Write it down first
 

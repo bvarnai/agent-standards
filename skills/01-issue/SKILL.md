@@ -18,8 +18,8 @@ metadata:
 ## Output contract (raw Markdown file)
 1. Write the generated issue in raw GitHub Flavored Markdown (no outer ` ```markdown ` wrapper, and with HTML guidance comments stripped) directly to `.issue-draft.md` in `CWD` (`Overwrite: true`). Invoking this skill grants explicit permission to create or overwrite `.issue-draft.md` without an additional confirmation prompt.
 2. Output the rendered issue in chat and provide:
-   - A clickable link to `.issue-draft.md`.
-   - A ready-to-run GitHub CLI command: `gh issue create --title "<type>(<scope>): <title>" --body-file .issue-draft.md`.
+   - The issue title in commit convention format: `<type>(<component>): <title>`.
+   - A clickable link to `.issue-draft.md`. The user creates the ticket from it in their own tracker.
 
 ## Mandatory issue layout template
 
