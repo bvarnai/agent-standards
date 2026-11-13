@@ -9,6 +9,8 @@ These standards apply to Go CLI applications and services whenever `go.mod` is p
 2. **Standard I/O streams**:
    - Always accept `io.Writer` for `stdout` and `stderr` rather than writing directly to `os.Stdout` / `os.Stderr` to make commands easily testable.
    - Structured output (JSON, YAML) and standard logs must not mix on `stdout`; write diagnostic logs to `stderr`.
+3. **Build-time version injection**:
+   - Inject release versions at build time via `-ldflags` or `runtime/debug.ReadBuildInfo()`, keeping a `"dev"` fallback in source (e.g., `internal/version/version.go`) rather than hardcoding release numbers in Go files.
 
 ## Error handling & context
 1. **Explicit wrapping & inspection**:

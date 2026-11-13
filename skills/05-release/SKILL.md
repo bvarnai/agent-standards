@@ -28,7 +28,7 @@ metadata:
   - `PATCH`: Backwards-compatible bug fixes, performance improvements, or security patches.
 
 ### 2. Release readiness check & artifact updates
-Inspect `CHANGELOG.md` and project manifests (`pom.xml`, `build.gradle`, `package.json`, `Cargo.toml`, `pyproject.toml`, `CMakeLists.txt`). For Go CLIs injecting version via `-ldflags` / `debug.ReadBuildInfo()`, leave the `"dev"` fallback untouched.
+Inspect `CHANGELOG.md` and project manifests (`pom.xml`, `build.gradle`, `package.json`, `Cargo.toml`, `pyproject.toml`, `CMakeLists.txt`). Leave build-time or tag-injected version fallbacks (e.g., `"dev"`) untouched.
 
 - **If release artifacts need updating** (`CHANGELOG.md` does not yet have `## [X.Y.Z]` or still has entries under `## [Unreleased]`, or a manifest has an older hardcoded version):
   1. Run `date +%F` for `YYYY-MM-DD` (never infer the date).
