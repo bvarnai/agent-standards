@@ -21,11 +21,18 @@ An LLM is like a very fast, very literal developer who cannot read your mind. If
 
 The workflow rests on the two artifacts described in the [README](../README.md#approach): specs and issues. Specs matter more with an agent than with a human teammate, because an agent reading existing code can't tell an intended invariant from an accidental bug. Only the spec can tell it which is which.
 
-## Where judgment stays
+## Who decides what
 
-Intent and anything irreversible stay with people, and the labor moves to the agent. The spec says what the system should do; the agent's part is to ask about edge cases and draft it. An issue says what changes next and what "done" means; the agent drafts it from the answers. Code, tests, linting, and drift audits are the agent's work, but whether a change ships is a human call. Every commit, push, tag, and deletion arrives as an exact command and waits for confirmation.
+The split is intentional: you own intent and irreversible actions, the agent owns the labor.
 
-When the spec doesn't answer a design question, the intended behavior is to stop and ask, not to guess.
+| You decide | The agent does |
+| :--- | :--- |
+| What the system should do (`docs/spec/`) | Interviews you about edge cases and drafts the spec |
+| What changes next and what "done" means (issue, acceptance criteria) | Drafts the issue from your answers |
+| Whether a change is ready to ship | Builds it and shows the evidence: passing tests and linters, and any spec ↔ code ↔ docs drift |
+| Every commit, push, tag, and deletion | Proposes the exact commands and waits for confirmation |
+
+If the agent hits a design question the spec doesn't answer, the intended behavior is to stop and ask, not to guess.
 
 ## How it's built, and why
 
