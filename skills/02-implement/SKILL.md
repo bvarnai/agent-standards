@@ -37,6 +37,7 @@ metadata:
 ### 3. Verification gate
 - Run the stack's automated test suite and static analysis commands from [`rules/stack-routing.md`](../../rules/stack-routing.md) (`go test -race ./...`, `go vet ./...`, `./mvnw test`, `shellcheck`, `bats`, `ctest`).
 - Do not claim completion until all automated tests and linters pass with zero warnings or errors.
+- After three failed fix/test attempts on the same blocker, stop and report `Blocked` with the failing check and observed cause.
 
 ## Output contract & commit / PR handoff
 Upon passing verification, output:
