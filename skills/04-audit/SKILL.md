@@ -4,7 +4,7 @@ description: Execute a read-only pre-release readiness audit across code, specif
 metadata:
   lifecycle_stage: "04-audit"
   mode: "interactive | one-shot"
-  recommended_flags: "--effort high"
+  recommended_flags: "--effort low"
 ---
 
 # 04 — Pre-release audit
@@ -21,20 +21,13 @@ metadata:
 - Verify `git status` is clean (no uncommitted modifications or untracked build artifacts) and the active branch is the intended release target.
 - Execute the full automated test suite (with race detection / memory checks enabled) and static analysis/linters (`go vet`, `shellcheck`, compiler warnings).
 
-### 2. Cross-artifact consistency (Spec $\leftrightarrow$ Code $\leftrightarrow$ Docs $\leftrightarrow$ CI)
-- Cross-reference CLI flags, environment variables, configuration schemas, exit codes, and public signatures in the source code against `docs/spec/`, `README.md`, and `docs/user-guide/`.
-- Verify version strings, dependency matrices, and minimum runtime/compiler versions across build manifests (`go.mod`, `pom.xml`, `CMakeLists.txt`), `.github/workflows/`, and documentation.
-- Flag deprecated features, dead references, or behavioral drift between documented examples and actual code paths.
+### 2. Manifest, version & sanity alignment
+- Verify version strings, dependency matrices, and minimum runtime/compiler versions align across build manifests (`go.mod`, `pom.xml`, `CMakeLists.txt`), `.github/workflows/`, and `README.md`.
+- Flag broken links, dead references, or obvious stale flags/examples without re-auditing documentation prose (owned by `/03-docs`) or re-reading every source file.
 
-### 3. Documentation depth & operational readiness
-- Evaluate whether architectural invariants, edge cases, failure modes, and concurrency/performance constraints are documented with sufficient technical rigor.
-- Identify **"happy-path bias"** where error handling, exit codes, recovery procedures, or platform-specific limitations (Linux/WSL vs. Windows) are omitted.
-- Check operational onboarding: reproducible build instructions, local development setup, and dependency prerequisites.
-
-### 4. Release governance, artifacts & CI/CD pipelines
+### 3. Release governance, artifacts & CI/CD pipelines
 - Verify the presence and completeness of standard repository and release files: `LICENSE`, `CHANGELOG.md` (with unreleased changes cataloged), `CONTRIBUTING.md` (when applicable), `.gitignore`, `.gitattributes`, and (if used by the repository) the `## 🤖 AI Disclosure` footer in root `README.md`.
 - Audit CI/CD and release workflows (`.github/workflows/ci.yml`, `release.yml`, package manager publishers): automated test/lint gates, cross-platform artifact compilation, checksum generation, and badge/telemetry accuracy.
-- Identify gaps in structured logging, diagnostic output (`stderr` prefixes/hints), or observability needed for production troubleshooting.
 
 ## Output contract
 Produce a concise, actionable audit report containing:
