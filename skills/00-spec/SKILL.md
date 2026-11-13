@@ -11,6 +11,7 @@ metadata:
 
 ## Constraints
 - Read and enforce [strict-technical-tone.md](../../fragments/strict-technical-tone.md).
+- **Permission:** Create and edit files under `docs/spec/` in CWD.
 
 ## Domain template routing
 Select and read the specification template matching the target system's domain before drafting:

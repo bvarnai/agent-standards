@@ -173,3 +173,33 @@ check_no_gh_calls() {
     return 1
   fi
 }
+
+# check_permission_line <skill-file>
+# Fails unless <skill-file> contains exactly one '- **Permission:**' line.
+check_permission_line() {
+  local file="$1"
+  local count
+
+  count="$(grep -cE '^- \*\*Permission:\*\* ' "${file}" || true)"
+  if [[ "${count}" -eq 0 ]]; then
+    echo "${file}: missing '- **Permission:**' line" >&2
+    return 1
+  fi
+  if [[ "${count}" -gt 1 ]]; then
+    echo "${file}: multiple '- **Permission:**' lines (${count})" >&2
+    return 1
+  fi
+}
+
+# check_no_default_branch_push <path>...
+# Fails if any file proposes pushing directly to main or master.
+check_no_default_branch_push() {
+  local matches
+
+  matches="$(grep -rnE 'git push([[:space:]]+[^[:space:]]+)*[[:space:]]+(main|master)([[:space:]]|$)' "$@" || true)"
+  if [[ -n "${matches}" ]]; then
+    echo "command proposes pushing the default branch:" >&2
+    echo "${matches}" >&2
+    return 1
+  fi
+}
