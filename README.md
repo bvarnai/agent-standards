@@ -99,7 +99,6 @@ Run these skills from inside the `agy` TUI or directly from your terminal:
 | Task | Slash command | CLI interactive (`agy -i`) | Purpose |
 | :--- | :--- | :--- | :--- |
 | **6. Harmonize** | `/06-harmonize` | `agy --mode plan --effort high -i "/06-harmonize"` | Compare two repos & plan structural uplift. |
-| **7. Models** | `/07-models` | `agy --effort medium -i "/07-models"` | Review available models & update the compass table. |
 
 ### Model & effort mental compass
 
